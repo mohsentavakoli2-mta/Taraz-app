@@ -1,0 +1,3536 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="تراز پرو">
+    <meta name="application-name" content="تراز پرو">
+    <meta name="theme-color" content="#090d16">
+    <title>تراز پرو | سیستم جامع مالی، پروژه و پرسنل</title>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <style>
+        /* پالت رنگی یکدست، مینیمال و حرفه‌ای (UI/UX Pro Max Standard) */
+        :root {
+            --bg-base: #090d16;
+            --bg-surface: #111827;
+            --bg-elevated: #1e293b;
+            --bg-glass: rgba(17, 24, 39, 0.88);
+            --accent: #10b981;
+            --accent-light: #34d399;
+            --accent-soft: rgba(16, 185, 129, 0.12);
+            --gold: #f59e0b;
+            --gold-light: #fbbf24;
+            --gold-soft: rgba(245, 158, 11, 0.12);
+            --danger: #ef4444;
+            --danger-light: #f87171;
+            --danger-soft: rgba(239, 68, 68, 0.12);
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --text-muted: #64748b;
+            --border: rgba(255, 255, 255, 0.08);
+            --border-focus: rgba(16, 185, 129, 0.45);
+            --radius-lg: 20px;
+            --radius-md: 14px;
+            --radius-sm: 10px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Roboto", "Noto Naskh Arabic", "SF Pro Arabic", "Geeza Pro", "Segoe UI", Tahoma, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        input, select, textarea {
+            user-select: text;
+            -webkit-user-select: text;
+        }
+
+        body {
+            background-color: var(--bg-base);
+            background-image: radial-gradient(circle at 50% 0%, rgba(16, 185, 129, 0.11) 0%, transparent 50%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            padding: calc(env(safe-area-inset-top, 14px) + 18px) 14px 130px 14px;
+            overflow-x: hidden;
+        }
+
+        .app-wrapper {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .view-section {
+            display: none;
+            animation: viewFade 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .view-section.active {
+            display: block;
+        }
+
+        @keyframes viewFade {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ================= نوار پروفایل بالای صفحه ================= */
+        .user-top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 10px 12px;
+            margin-bottom: 14px;
+        }
+
+        .user-chip {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--accent), #059669);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            color: #fff;
+            font-size: 15px;
+            overflow: hidden;
+        }
+
+        .user-avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+        .top-mini-btns { display: flex; gap: 6px; }
+
+        .mini-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            padding: 7px 11px;
+            border-radius: var(--radius-sm);
+            font-size: 11.5px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .mini-btn:active { transform: scale(0.96); }
+
+        /* ================= هدر برند تراز ================= */
+        .hero-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.14), var(--bg-surface));
+            border: 1px solid var(--border-focus);
+            border-radius: var(--radius-lg);
+            padding: 15px 16px;
+            margin-bottom: 18px;
+        }
+
+        .hero-logo-box {
+            width: 62px;
+            height: 62px;
+            border-radius: 16px;
+            padding: 2px;
+            background: linear-gradient(135deg, var(--accent-light), var(--gold));
+            flex-shrink: 0;
+        }
+
+        .hero-logo-box img { width: 100%; height: 100%; border-radius: 14px; display: block; }
+        .hero-text h1 { font-size: 19px; font-weight: 900; color: #fff; margin-bottom: 3px; }
+        .hero-text p { font-size: 11.5px; color: var(--text-secondary); line-height: 1.5; }
+
+        /* ================= پوشه‌بندی و دسته‌بندی صفحه اول ================= */
+        .folder-category {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 14px;
+            margin-bottom: 14px;
+        }
+
+        .folder-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .folder-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 800;
+            color: var(--text-secondary);
+        }
+
+        .folder-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent);
+        }
+
+        .folder-dot.gold { background: var(--gold); }
+
+        .folder-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .mod-card {
+            background: rgba(255, 255, 255, 0.025);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 13px 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 8px;
+            cursor: pointer;
+            transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+        }
+
+        .mod-card:active {
+            transform: scale(0.97);
+            border-color: var(--border-focus);
+            background: rgba(16, 185, 129, 0.06);
+        }
+
+        .mod-card.full-span {
+            grid-column: span 2;
+            flex-direction: row;
+            align-items: center;
+        }
+
+        .mod-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .mod-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background: var(--accent-soft);
+            color: var(--accent-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .mod-icon.gold-ic {
+            background: var(--gold-soft);
+            color: var(--gold-light);
+        }
+
+        .mod-badge {
+            font-size: 10.5px;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 7px;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-secondary);
+        }
+
+        .mod-title { font-size: 13.5px; font-weight: 800; color: #fff; margin-bottom: 2px; }
+        .mod-sub { font-size: 11px; color: var(--text-muted); line-height: 1.4; }
+
+        /* ================= نوار بالای صفحات داخلی ================= */
+        .top-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            padding: 10px 12px;
+            border-radius: var(--radius-md);
+            margin-bottom: 12px;
+        }
+
+        .btn-back {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            padding: 7px 11px;
+            border-radius: var(--radius-sm);
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .nav-title-box { display: flex; align-items: center; gap: 7px; overflow: hidden; }
+        .nav-mini-logo { width: 24px; height: 24px; border-radius: 6px; }
+        .nav-title { font-size: 13.5px; font-weight: 800; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 165px; }
+        .nav-actions { display: flex; gap: 5px; }
+
+        .icon-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .icon-btn.gold { color: var(--gold-light); border-color: rgba(245, 158, 11, 0.3); }
+        .icon-btn.danger { color: var(--danger-light); border-color: rgba(239, 68, 68, 0.3); }
+        .icon-btn.minus { color: var(--danger-light); background: var(--danger-soft); border-color: rgba(239, 68, 68, 0.3); font-weight: 900; }
+
+        /* ================= فرم‌ها و فیلدهای تقویم ================= */
+        .panel-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 14px;
+            margin-bottom: 12px;
+        }
+
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
+        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 8px; }
+
+        .field-group label {
+            display: block;
+            font-size: 10.5px;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+        }
+
+        .input-control {
+            width: 100%;
+            background: var(--bg-base);
+            border: 1px solid var(--border);
+            color: #fff;
+            padding: 9px 10px;
+            border-radius: var(--radius-sm);
+            font-size: 13px;
+            outline: none;
+        }
+
+        .input-control:focus { border-color: var(--accent); }
+
+        /* استایل کادر تاریخ با آیکون تقویم */
+        .date-picker-trigger {
+            cursor: pointer;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%2310b981' viewBox='0 0 24 24'%3E%3Cpath d='M19 4h-1V2h-2v2H8V2H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: left 9px center;
+            background-size: 16px;
+            padding-left: 30px;
+            color: var(--gold-light);
+            font-weight: 700;
+        }
+
+        .amount-field {
+            font-size: 15px;
+            font-weight: 800;
+            color: var(--accent-light);
+            direction: ltr;
+            text-align: left;
+        }
+
+        .btn-action {
+            width: 100%;
+            margin-top: 4px;
+            background: linear-gradient(135deg, var(--accent), #059669);
+            color: #fff;
+            border: none;
+            padding: 11px;
+            border-radius: var(--radius-sm);
+            font-size: 13.5px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        .btn-action:active { transform: scale(0.98); }
+        .btn-action.danger-btn { background: linear-gradient(135deg, #ef4444, #b91c1c); }
+        .btn-action.gold-btn { background: linear-gradient(135deg, var(--gold), #d97706); color: #000; }
+
+        /* ================= بنرهای جمع کل و آمار ================= */
+        .inline-total-banner {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.16), var(--bg-surface));
+            border: 1px solid var(--border-focus);
+            border-radius: var(--radius-md);
+            padding: 13px 15px;
+            margin-bottom: 12px;
+        }
+
+        .total-main-row { display: flex; justify-content: space-between; align-items: center; }
+        .total-sub-details { display: flex; justify-content: space-between; margin-top: 7px; padding-top: 7px; border-top: 1px dashed var(--border); font-size: 11px; color: var(--text-secondary); }
+        .total-left { font-size: 20px; font-weight: 900; color: #fff; }
+        .total-left small { font-size: 11px; color: var(--accent-light); }
+
+        .deduct-panel {
+            background: var(--danger-soft);
+            border: 1px solid rgba(239, 68, 68, 0.28);
+            border-radius: var(--radius-md);
+            padding: 11px;
+            margin-bottom: 12px;
+        }
+
+        .entries-stack { display: flex; flex-direction: column; gap: 8px; }
+
+        .item-box {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-right: 3px solid var(--accent);
+            border-radius: var(--radius-md);
+            padding: 12px 13px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .item-box.deduction-item {
+            border-right-color: var(--danger);
+            background: rgba(239, 68, 68, 0.06);
+        }
+
+        .day-pill {
+            background: var(--gold-soft);
+            color: var(--gold-light);
+            padding: 2px 6px;
+            border-radius: 5px;
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .item-desc { font-size: 13px; font-weight: 700; color: var(--text-primary); margin-top: 3px; }
+        .item-sub-history { font-size: 10.5px; color: var(--danger-light); margin-top: 2px; }
+        .item-price { font-size: 14.5px; font-weight: 900; color: var(--accent-light); text-align: left; }
+
+        .btn-open-calc {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-focus);
+            color: var(--accent-light);
+            padding: 10px;
+            border-radius: var(--radius-sm);
+            font-size: 13px;
+            font-weight: 800;
+            cursor: pointer;
+            margin-bottom: 12px;
+        }
+
+        /* ================= کارت کارمندان (HR & Payroll) ================= */
+        .emp-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-right: 3px solid var(--gold);
+            border-radius: var(--radius-md);
+            padding: 12px;
+        }
+
+        .emp-card.paid {
+            border-right-color: var(--accent);
+            background: rgba(16, 185, 129, 0.05);
+        }
+
+        .emp-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8px;
+        }
+
+        .emp-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 4px;
+            font-size: 10.5px;
+            color: var(--text-secondary);
+        }
+
+        .emp-tag {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2px 7px;
+            border-radius: 6px;
+        }
+
+        .emp-financial-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 6px;
+            background: rgba(0, 0, 0, 0.25);
+            padding: 8px 10px;
+            border-radius: 9px;
+            font-size: 11px;
+            margin-bottom: 8px;
+        }
+
+        .emp-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 8px;
+            border-top: 1px dashed var(--border);
+        }
+
+        /* ================= ماشین‌حساب شناور مشکی مات شیشه‌ای ================= */
+        .calc-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.76);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 14px;
+            z-index: 450;
+        }
+
+        .calc-modal-overlay.active { display: flex; }
+
+        .glass-calc-wrapper {
+            width: 100%;
+            max-width: 355px;
+            background: rgba(13, 18, 26, 0.94);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            border-radius: 24px;
+            padding: 16px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.85);
+        }
+
+        .calc-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .calc-mode-switch { display: flex; gap: 4px; background: rgba(255, 255, 255, 0.06); padding: 3px; border-radius: 9px; }
+        .calc-mode-btn { background: transparent; border: none; color: var(--text-secondary); padding: 4px 9px; border-radius: 6px; font-size: 11px; font-weight: 800; cursor: pointer; }
+        .calc-mode-btn.active { background: var(--accent); color: #fff; }
+        .calc-top-tools { display: flex; gap: 6px; }
+        .calc-tool-btn { background: rgba(255, 255, 255, 0.08); border: 1px solid var(--border); color: #fff; width: 30px; height: 30px; border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 12px; }
+
+        .calc-screen { background: var(--bg-base); border: 1px solid var(--border); border-radius: 14px; padding: 11px 13px; margin-bottom: 12px; text-align: left; direction: ltr; }
+        .calc-expression { font-size: 11.5px; color: var(--text-muted); min-height: 16px; word-break: break-all; }
+        .calc-output { font-size: 25px; font-weight: 900; color: #fff; overflow-x: auto; white-space: nowrap; }
+
+        .calc-history-drawer { display: none; max-height: 140px; overflow-y: auto; background: var(--bg-base); border: 1px solid var(--border); border-radius: 11px; padding: 8px 10px; margin-bottom: 10px; direction: ltr; text-align: left; }
+        .calc-history-drawer.active { display: block; }
+        .history-item-row { padding: 5px 0; border-bottom: 1px dashed var(--border); display: flex; justify-content: space-between; font-size: 11.5px; cursor: pointer; }
+
+        .calc-keys-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 7px; direction: ltr; }
+        .calc-keys-grid.scientific-mode { grid-template-columns: repeat(5, 1fr); gap: 6px; }
+        .ckey { height: 46px; border-radius: 12px; border: 1px solid var(--border); background: rgba(255, 255, 255, 0.04); color: #fff; font-size: 16px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .ckey:active { transform: scale(0.93); background: rgba(255, 255, 255, 0.14); }
+        .ckey.op { background: var(--gold-soft); color: var(--gold-light); }
+        .ckey.fn { background: rgba(255, 255, 255, 0.08); color: var(--text-secondary); font-size: 13px; }
+        .ckey.clear { background: var(--danger-soft); color: var(--danger-light); }
+        .ckey.equal { background: var(--accent); color: #fff; font-weight: 900; }
+        .sci-only { display: none; }
+        .scientific-mode .sci-only { display: flex; }
+
+        /* ================= سایر کامپوننت‌های مشترک ================= */
+        .quote-result-card { background: var(--bg-surface); border: 1px solid rgba(245, 158, 11, 0.4); border-radius: var(--radius-lg); padding: 14px; margin-bottom: 14px; }
+        .quote-row { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px dashed var(--border); font-size: 12px; }
+        .quote-final { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; padding-top: 10px; border-top: 2px solid rgba(245, 158, 11, 0.4); font-size: 14.5px; font-weight: 900; color: var(--gold-light); }
+
+        .loan-stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin-bottom: 12px; }
+        .stat-box { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 10px; text-align: center; }
+        .stat-box .s-label { font-size: 10.5px; color: var(--text-secondary); margin-bottom: 3px; }
+        .stat-box .s-val { font-size: 15px; font-weight: 900; color: var(--gold-light); }
+
+        .installment-card { background: var(--bg-surface); border: 1px solid var(--border); border-right: 3px solid var(--gold); border-radius: var(--radius-md); padding: 11px; display: flex; justify-content: space-between; align-items: center; }
+        .installment-card.paid { border-right-color: var(--accent); opacity: 0.78; }
+        .check-btn { width: 26px; height: 26px; border-radius: 7px; border: 2px solid var(--text-secondary); background: transparent; color: #fff; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 13px; font-weight: 900; }
+        .installment-card.paid .check-btn { background: var(--accent); border-color: var(--accent); }
+        .bell-btn { width: 30px; height: 30px; border-radius: 8px; border: 1px solid var(--border); background: rgba(255, 255, 255, 0.04); color: var(--text-secondary); display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 14px; }
+        .bell-btn.active { background: var(--gold-soft); border-color: var(--gold); color: var(--gold-light); }
+
+        .search-bar-wrap { display: flex; gap: 8px; margin-bottom: 12px; }
+        .search-bar-wrap input { flex: 1; background: var(--bg-surface); border: 1px solid var(--border); color: #fff; padding: 10px 12px; border-radius: var(--radius-sm); font-size: 13px; outline: none; }
+        .btn-delete-all { background: var(--danger-soft); border: 1px solid rgba(239, 68, 68, 0.3); color: var(--danger-light); padding: 0 11px; border-radius: var(--radius-sm); font-size: 11.5px; font-weight: 700; cursor: pointer; }
+        .empty-box { text-align: center; padding: 24px 12px; background: var(--bg-surface); border: 1px dashed var(--border); border-radius: var(--radius-md); color: var(--text-muted); font-size: 12px; line-height: 1.7; }
+
+        /* ================= مودال‌ها و تقویم شمسی لمسی ================= */
+        .modal-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.82);
+            backdrop-filter: blur(5px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            z-index: 500;
+        }
+
+        .modal-backdrop.active { display: flex; }
+
+        .modal-box {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-focus);
+            border-radius: var(--radius-lg);
+            width: 100%;
+            max-width: 400px;
+            padding: 16px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-head { font-size: 14.5px; font-weight: 800; color: #fff; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
+        .modal-btns { display: flex; gap: 8px; margin-top: 13px; }
+        .m-btn { flex: 1; padding: 10px; border-radius: var(--radius-sm); border: none; font-weight: 800; font-size: 13px; cursor: pointer; }
+        .m-btn.confirm { background: var(--accent); color: #fff; }
+        .m-btn.cancel { background: rgba(255, 255, 255, 0.08); color: var(--text-secondary); }
+
+        /* گرید روزهای تقویم شمسی */
+        .jalali-days-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 6px;
+            margin-top: 10px;
+            direction: rtl;
+        }
+
+        .j-day-btn {
+            height: 36px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.03);
+            color: var(--text-primary);
+            font-size: 12.5px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .j-day-btn.selected {
+            background: var(--accent);
+            border-color: var(--accent-light);
+            color: #fff;
+            font-weight: 900;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-wrapper">
+
+        <!-- ==================== صفحه ۱: داشبورد اصلی پوشه‌بندی شده ==================== -->
+        <section id="viewHome" class="view-section active">
+
+            <!-- نوار پروفایل کاربر و اتصال گوگل -->
+            <div class="user-top-bar">
+                <div class="user-chip" onclick="openAccountModal()">
+                    <div class="user-avatar" id="userAvatarContainer">
+                        <span id="userAvatarChar">ک</span>
+                    </div>
+                    <div>
+                        <div style="font-size: 12.5px; font-weight: 800; color: #fff;" id="displayUserName">کاربر مهمان (آفلاین)</div>
+                        <div style="font-size: 10px; color: var(--text-muted);" id="userEmailSub">برای اتصال گوگل یا بکاپ لمس کنید</div>
+                    </div>
+                </div>
+                <div class="top-mini-btns">
+                    <button class="mini-btn" onclick="openFloatingCalc()">🧮 ماشین‌حساب</button>
+                    <button class="mini-btn" onclick="openAccountModal()">⚙️ حساب و بکاپ</button>
+                </div>
+            </div>
+
+            <!-- هدر برند تراز -->
+            <div class="hero-header">
+                <div class="hero-logo-box">
+                    <img id="mainLogoImg" alt="لوگوی تراز">
+                </div>
+                <div class="hero-text">
+                    <h1>تراز پرو</h1>
+                    <p>سیستم یکپارچه مالی، خزانه‌داری، اقساط، حقوق پرسنل و برآورد مهندسی</p>
+                </div>
+            </div>
+
+            <!-- پوشه ۱: دفتر محاسبات و فاکتورهای سریع -->
+            <div class="folder-category">
+                <div class="folder-header">
+                    <div class="folder-title"><span class="folder-dot"></span> ۱. پوشه محاسبات و صورت‌حساب‌ها</div>
+                </div>
+                <div class="folder-grid">
+                    <div class="mod-card" onclick="openNewCalcModal()">
+                        <div class="mod-top">
+                            <div class="mod-icon">＋</div>
+                            <span class="mod-badge">ثبت جدید</span>
+                        </div>
+                        <div>
+                            <div class="mod-title">ایجاد محاسبه جدید</div>
+                            <div class="mod-sub">ثبت مبالغ، تاریخ و کسورات</div>
+                        </div>
+                    </div>
+
+                    <div class="mod-card" onclick="showSavedCalcsView()">
+                        <div class="mod-top">
+                            <div class="mod-icon gold-ic">📂</div>
+                            <span class="mod-badge" id="savedCountBadge">۰ فایل</span>
+                        </div>
+                        <div>
+                            <div class="mod-title">لیست محاسبات قبلی</div>
+                            <div class="mod-sub">جستجو و ویرایش پرونده‌ها</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- پوشه ۲: مدیریت منابع انسانی، حقوق پرسنل و برآورد پروژه -->
+            <div class="folder-category">
+                <div class="folder-header">
+                    <div class="folder-title"><span class="folder-dot gold"></span> ۲. پوشه کارفرمایی، حقوق پرسنل و برآورد پروژه</div>
+                </div>
+                <div class="folder-grid">
+                    <div class="mod-card" onclick="showPayrollProjectsView()">
+                        <div class="mod-top">
+                            <div class="mod-icon">👔</div>
+                            <span class="mod-badge" id="payrollCountBadge">۰ لیست</span>
+                        </div>
+                        <div>
+                            <div class="mod-title">حقوق و دستمزد پرسنل</div>
+                            <div class="mod-sub">پروژه، مشخصات کارمند، عیدی، پورسانت و وام</div>
+                        </div>
+                    </div>
+
+                    <div class="mod-card" onclick="showProjectEstimatorView()">
+                        <div class="mod-top">
+                            <div class="mod-icon gold-ic">📐</div>
+                            <span class="mod-badge" id="estCountBadge">۰ پروژه</span>
+                        </div>
+                        <div>
+                            <div class="mod-title">برآورد قیمت پروژه</div>
+                            <div class="mod-sub">متریال، دستمزد، تعدیل تورم و مالیات</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- پوشه ۳: خزانه‌داری، حساب‌های بانکی و اشخاص -->
+            <div class="folder-category">
+                <div class="folder-header">
+                    <div class="folder-title"><span class="folder-dot"></span> ۳. پوشه خزانه‌داری و حساب اشخاص</div>
+                </div>
+                <div class="folder-grid">
+                    <div class="mod-card" onclick="showBankAccountsView()">
+                        <div class="mod-top">
+                            <div class="mod-icon">💳</div>
+                            <span class="mod-badge" id="bankCountBadge">۰ حساب</span>
+                        </div>
+                        <div>
+                            <div class="mod-title">حساب‌ها و موجودی</div>
+                            <div class="mod-sub">تعریف حساب، واریز و برداشت</div>
+                        </div>
+                    </div>
+
+                    <div class="mod-card" onclick="showPeopleLedgerView()">
+                        <div class="mod-top">
+                            <div class="mod-icon gold-ic">👥</div>
+                            <span class="mod-badge" id="peopleCountBadge">۰ مورد</span>
+                        </div>
+                        <div>
+                            <div class="mod-title">بدهکار و بستانکار</div>
+                            <div class="mod-sub">مدیریت طلب و بدهی اشخاص</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- پوشه ۴: تعهدات بانکی (وام، اقساط و چک) -->
+            <div class="folder-category">
+                <div class="folder-header">
+                    <div class="folder-title"><span class="folder-dot gold"></span> ۴. پوشه تسهیلات بانکی و یادآور چک‌ها</div>
+                </div>
+                <div class="folder-grid">
+                    <div class="mod-card" onclick="showSavedLoansView()">
+                        <div class="mod-top">
+                            <div class="mod-icon">🏦</div>
+                            <span class="mod-badge" id="savedLoansBadge">۰ وام</span>
+                        </div>
+                        <div>
+                            <div class="mod-title">وام و اقساط (+سود)</div>
+                            <div class="mod-sub">محاسبه سود، اقساط و زنگوله</div>
+                        </div>
+                    </div>
+
+                    <div class="mod-card" onclick="showChequesView()">
+                        <div class="mod-top">
+                            <div class="mod-icon gold-ic">🎫</div>
+                            <span class="mod-badge" id="chequesCountBadge">۰ چک</span>
+                        </div>
+                        <div>
+                            <div class="mod-title">یادآور چک‌ها</div>
+                            <div class="mod-sub">چک ورودی و خروجی + آلارم</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ==================== صفحه ۲: لیست محاسبه‌های قبلی ==================== -->
+        <section id="viewList" class="view-section">
+            <div class="top-nav">
+                <button class="btn-back" onclick="showHomeView()">→ خانه</button>
+                <div class="nav-title-box">
+                    <img class="nav-mini-logo" alt="تراز">
+                    <span class="nav-title">لیست محاسبه‌ها</span>
+                </div>
+                <button class="mini-btn" style="background:var(--accent); color:#fff;" onclick="openNewCalcModal()">＋ جدید</button>
+            </div>
+
+            <div class="search-bar-wrap">
+                <input type="text" id="searchCalcInput" placeholder="🔍 جستجوی نام محاسبه..." oninput="renderSavedList()">
+                <button class="btn-delete-all" onclick="deleteAllCalculations()">🗑 حذف کلی</button>
+            </div>
+
+            <div id="savedCalcsContainer" class="entries-stack"></div>
+        </section>
+
+        <!-- ==================== صفحه ۳: داخل یک محاسبه ==================== -->
+        <section id="viewCalc" class="view-section">
+            <div class="top-nav">
+                <button class="btn-back" onclick="showHomeView()">→ خانه</button>
+                <div class="nav-title-box">
+                    <img class="nav-mini-logo" alt="تراز">
+                    <span class="nav-title" id="activeCalcNameTitle">نام محاسبه</span>
+                </div>
+                <div class="nav-actions">
+                    <button class="icon-btn gold" onclick="openRenameCalcModal()" title="ویرایش نام">✎</button>
+                    <button class="icon-btn danger" onclick="deleteActiveCalculation()" title="حذف">🗑</button>
+                </div>
+            </div>
+
+            <button class="btn-open-calc" onclick="openFloatingCalc()">
+                <span>🧮 ماشین‌حساب شناور (ساده و پیشرفته + تاریخچه)</span>
+            </button>
+
+            <div class="panel-card">
+                <div class="grid-2">
+                    <div class="field-group">
+                        <label>روز هفته</label>
+                        <select id="inDay" class="input-control">
+                            <option value="شنبه">شنبه</option>
+                            <option value="یکشنبه">یکشنبه</option>
+                            <option value="دوشنبه">دوشنبه</option>
+                            <option value="سه‌شنبه">سه‌شنبه</option>
+                            <option value="چهارشنبه">چهارشنبه</option>
+                            <option value="پنجشنبه">پنجشنبه</option>
+                            <option value="جمعه">جمعه</option>
+                        </select>
+                    </div>
+                    <div class="field-group">
+                        <label>تاریخ (انتخاب از تقویم)</label>
+                        <input type="text" id="inDate" readonly class="input-control date-picker-trigger" onclick="openJalaliDatePicker('inDate')" placeholder="انتخاب تاریخ">
+                    </div>
+                </div>
+
+                <div class="grid-2">
+                    <div class="field-group">
+                        <label>عنوان / توضیح</label>
+                        <input type="text" id="inNote" class="input-control" placeholder="مثلاً خرید متریال">
+                    </div>
+                    <div class="field-group">
+                        <label>مبلغ (تومان)</label>
+                        <input type="text" id="inAmount" inputmode="numeric" class="input-control amount-field" placeholder="0" oninput="formatNumberInput(this)">
+                    </div>
+                </div>
+
+                <button class="btn-action" onclick="addEntryToActiveCalc('add')">＋ افزودن مبلغ به لیست</button>
+            </div>
+
+            <div class="inline-total-banner">
+                <div class="total-main-row">
+                    <div>
+                        <div style="font-size: 12px; color: var(--text-secondary); font-weight: 700;">مانده خالص (جمع کل نهایی):</div>
+                        <div style="font-size: 11px; color: var(--gold-light); margin-top: 2px;" id="activeCalcCount">۰ ردیف</div>
+                    </div>
+                    <div class="total-left" id="activeCalcSum">۰ <small>تومان</small></div>
+                </div>
+                <div class="total-sub-details">
+                    <span>جمع ورودی‌ها: <b id="grossAddSum">۰</b></span>
+                    <span style="color: var(--danger-light);">جمع کسورات: <b id="grossDeductSum">۰</b></span>
+                </div>
+            </div>
+
+            <div class="deduct-panel">
+                <div style="font-size:11.5px; font-weight:800; color:var(--danger-light); margin-bottom:7px;">➖ کسر کردن مبلغ از جمع کل</div>
+                <div class="grid-2">
+                    <div class="field-group">
+                        <input type="text" id="deductGlobalNote" class="input-control" placeholder="علت کسر (بیعانه / تخفیف)">
+                    </div>
+                    <div class="field-group">
+                        <input type="text" id="deductGlobalAmount" inputmode="numeric" class="input-control amount-field" style="color: var(--danger-light);" placeholder="مبلغ کسر..." oninput="formatNumberInput(this)">
+                    </div>
+                </div>
+                <button class="btn-action danger-btn" onclick="addGlobalDeduction()">➖ کم کردن از جمع کل</button>
+            </div>
+
+            <div id="entriesStack" class="entries-stack"></div>
+        </section>
+
+        <!-- ==================== صفحه ۴: حساب‌های بانکی ==================== -->
+        <section id="viewBankAccounts" class="view-section">
+            <div class="top-nav">
+                <button class="btn-back" onclick="showHomeView()">→ خانه</button>
+                <div class="nav-title-box">
+                    <img class="nav-mini-logo" alt="تراز">
+                    <span class="nav-title">حساب‌ها و موجودی</span>
+                </div>
+            </div>
+
+            <div class="inline-total-banner">
+                <div class="total-main-row">
+                    <span style="font-size: 12px; font-weight: 800; color: var(--text-secondary);">💰 مجموع موجودی کل حساب‌ها:</span>
+                    <div class="total-left" id="totalAllBanksBalance">۰ <small>تومان</small></div>
+                </div>
+            </div>
+
+            <div class="panel-card">
+                <div style="font-size:12.5px; font-weight:800; color:var(--accent-light); margin-bottom:8px;">💳 تعریف حساب بانکی یا صندوق جدید</div>
+                <div class="grid-2">
+                    <div class="field-group">
+                        <label>نام حساب / بانک</label>
+                        <input type="text" id="newBankName" class="input-control" placeholder="مثلاً: کارت ملت / صندوق کارگاه">
+                    </div>
+                    <div class="field-group">
+                        <label>موجودی اولیه (تومان)</label>
+                        <input type="text" id="newBankInitial" inputmode="numeric" class="input-control amount-field" placeholder="0" oninput="formatNumberInput(this)">
+                    </div>
+                </div>
+                <button class="btn-action" onclick="createNewBankAccount()">＋ ایجاد حساب جدید</button>
+            </div>
+
+            <div class="panel-card">
+                <div style="font-size:12.5px; font-weight:800; color:var(--gold-light); margin-bottom:8px;">🔄 ثبت ورودی (واریز) یا خروجی (برداشت)</div>
+                <div class="grid-2">
+                    <div class="field-group">
+                        <label>انتخاب حساب</label>
+                        <select id="txBankSelect" class="input-control"></select>
+                    </div>
+                    <div class="field-group">
+                        <label>نوع تراکنش</label>
+                        <select id="txTypeSelect" class="input-control">
+                            <option value="in">🟢 ورودی پول (واریز به حساب)</option>
+                            <option value="out">🔴 خروجی پول (برداشت از حساب)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="grid-2">
+                    <div class="field-group">
+                        <label>تاریخ تراکنش</label>
+                        <input type="text" id="txDateInput" readonly class="input-control date-picker-trigger" onclick="openJalaliDatePicker('txDateInput')">
+                    </div>
+                    <div class="field-group">
+                        <label>مبلغ (تومان)</label>
+                        <input type="text" id="txAmountInput" inputmode="numeric" class="input-control amount-field" placeholder="0" oninput="formatNumberInput(this)">
+                    </div>
+                </div>
+                <div class="field-group" style="margin-bottom:8px;">
+                    <label>بابت / توضیح</label>
+                    <input type="text" id="txNoteInput" class="input-control" placeholder="مثلاً پیش‌پرداخت کارفرما">
+                </div>
+                <button class="btn-action gold-btn" onclick="addBankTransaction()">ثبت تراکنش در حساب</button>
+            </div>
+
+            <div id="bankAccountsStack" class="entries-stack" style="margin-bottom:14px;"></div>
+            <div id="bankTxHistoryStack" class="entries-stack"></div>
+        </section>
+
+        <!-- ==================== صفحه ۵: بدهکار و بستانکار ==================== -->
+        <section id="viewPeopleLedger" class="view-section">
+            <div class="top-nav">
+                <button class="btn-back" onclick="showHomeView()">→ خانه</button>
+                <div class="nav-title-box">
+                    <img class="nav-mini-logo" alt="تراز">
+                    <span class="nav-title">بدهکار و بستانکار</span>
+                </div>
+            </div>
+
+            <div class="loan-stats-grid">
+                <div class="stat-box">
+                    <div class="s-label">کل طلب من (بستانکارم)</div>
+                    <div class="s-val" id="totalReceivableVal" style="color: var(--accent-light);">۰ ت</div>
+                </div>
+                <div class="stat-box">
+                    <div class="s-label">کل بدهی من (بدهکارم)</div>
+                    <div class="s-val" id="totalPayableVal" style="color: var(--danger-light);">۰ ت</div>
+                </div>
+            </div>
+
+            <div class="panel-card">
+                <div style="font-size:12.5px; font-weight:800; color:#fff; margin-bottom:8px;">👤 ثبت طرف حساب جدید</div>
+                <div class="grid-2">
+                    <div class="field-group">
+                        <label>نام شخص / شرکت</label>
+                        <input type="text" id="personNameInput" class="input-control" placeholder="مثلاً آقای رضایی">
+                    </div>
+                    <div class="field-group">
+                        <label>وضعیت حساب</label>
+                        <select id="personTypeInput" class="input-control">
+                            <option value="debtor">🟢 به من بدهکار است (طلب دارم)</option>
+                            <option value="creditor">🔴 از من طلبکار است (بدهکارم)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="grid-2">
+                    <div class="field-group">
+                        <label>تاریخ ثبت</label>
+                        <input type="text" id="personDateInput" readonly class="input-control date-picker-trigger" onclick="openJalaliDatePicker('personDateInput')">
+                    </div>
+                    <div class="field-group">
+                        <label>مبلغ (تومان)</label>
+                        <input type="text" id="personAmountInput" inputmode="numeric" class="input-control amount-field" placeholder="0" oninput="formatNumberInput(this)">
+                    </div>
+                </div>
+                <div class="field-group" style="margin-bottom:8px;">
+                    <label>بابت / توضیح</label>
+                    <input type="text" id="personNoteInput" class="input-control" placeholder="مثلاً مانده فاکتور">
+                </div>
+                <button class="btn-action" onclick="addPersonRecord()">＋ ثبت در لیست بدهکار/بستانکار</button>
+            </div>
+
+            <div id="peopleStack" class="entries-stack"></div>
+        </section>
+
+        <!-- ==================== صفحه ۶: برآورد قیمت پروژه ==================== -->
+        <section id="viewProjectEstimator" class="view-section">
+            <div class="top-nav">
+                <button class="btn-back" onclick="showHomeView()">→ خانه</button>
+                <div class="nav-title-box">
+                    <img class="nav-mini-logo" alt="تراز">
+                    <span class="nav-title">برآورد قیمت پروژه</span>
+                </div>
+            </div>
+
+            <div class="panel-card">
+                <div style="font-size:12.5px; font-weight:800; color:var(--gold-light); margin-bottom:8px;">📐 محاسبه‌گر سریع قیمت تمام‌شده و پیشنهاد به کارفرما</div>
+                <div class="field-group" style="margin-bottom:8px;">
+                    <label>عنوان پروژه / نام کارفرما</label>
+                    <input type="text" id="estTitle" class="input-control" placeholder="مثلاً: ساخت پنجره دوجداره پروژه الهیه">
+                </div>
+
+                <div class="grid-3">
+                    <div class="field-group">
+                        <label>هزینه متریال (تومان)</label>
+                        <input type="text" id="estMaterial" inputmode="numeric" class="input-control amount-field" placeholder="0" oninput="formatNumberInput(this); liveCalcEstimate();">
+                    </div>
+                    <div class="field-group">
+                        <label>دستمزد و اجرا (تومان)</label>
+                        <input type="text" id="estLabor" inputmode="numeric" class="input-control amount-field" placeholder="0" oninput="formatNumberInput(this); liveCalcEstimate();">
+                    </div>
+                    <div class="field-group">
+                        <label>حمل و سایر (تومان)</label>
+                        <input type="text" id="estOther" inputmode="numeric" class="input-control amount-field" placeholder="0" oninput="formatNumberInput(this); liveCalcEstimate();">
+                    </div>
+                </div>
+
+                <div class="grid-3">
+                    <div class="field-group">
+                        <label>مدت پروژه (ماه)</label>
+                        <input type="number" id="estMonths" class="input-control" value="1" oninput="liveCalcEstimate()">
+                    </div>
+                    <div class="field-group">
+                        <label>تورم/تعدیل ماهانه (%)</label>
+                        <input type="number" id="estInflation" class="input-control" value="3" step="0.5" oninput="liveCalcEstimate()">
+                    </div>
+                    <div class="field-group">
+                        <label>سود پیمانکار (%)</label>
+                        <input type="number" id="estProfit" class="input-control" value="20" oninput="liveCalcEstimate()">
+                    </div>
+                </div>
+
+                <div class="grid-2">
+                    <div class="field-group">
+                        <label>مالیات ارزش افزوده VAT (%)</label>
+                        <input type="number" id="estVat" class="input-control" value="10" oninput="liveCalcEstimate()">
+                    </div>
+                    <div class="field-group">
+                        <label>کسورات / مالیات تکلیفی (%)</label>
+                        <input type="number" id="estWithholding" class="input-control" value="5" oninput="liveCalcEstimate()">
+                    </div>
+                </div>
+            </div>
+
+            <div class="quote-result-card">
+                <div style="font-size:13px; font-weight:900; color:#fff; margin-bottom:8px;">📊 ریز محاسبات و قیمت نهایی کارفرما:</div>
+                <div class="quote-row"><span>جمع هزینه پایه:</span><b id="resBaseCost">۰ تومان</b></div>
+                <div class="quote-row"><span>ضریب تعدیل و تورم مدت پروژه:</span><b id="resInflationAmt" style="color:var(--gold-light);">۰ تومان</b></div>
+                <div class="quote-row"><span>سود پیمانکار:</span><b id="resProfitAmt" style="color:var(--accent-light);">۰ تومان</b></div>
+                <div class="quote-row"><span>پوشش مالیات تکلیفی:</span><b id="resWithholdingAmt" style="color:var(--danger-light);">۰ تومان</b></div>
+                <div class="quote-row"><span>مالیات ارزش افزوده (VAT):</span><b id="resVatAmt">۰ تومان</b></div>
+                <div class="quote-final">
+                    <span>🎯 مبلغ نهایی پیشنهادی به کارفرما:</span>
+                    <span id="resFinalClientPrice" style="font-size:17px;">۰ تومان</span>
+                </div>
+                <div style="display:flex; gap:8px; margin-top:12px;">
+                    <button class="btn-action gold-btn" onclick="saveEstimateRecord()">💾 ذخیره این برآورد</button>
+                    <button class="btn-action" style="background:rgba(255,255,255,0.08);" onclick="copyEstimateSummary()">📋 کپی پیش‌فاکتور</button>
+                </div>
+            </div>
+
+            <div id="savedEstimatesStack" class="entries-stack"></div>
+        </section>
+
+        <!-- ==================== صفحه ۷: یادآور چک‌ها ==================== -->
+        <section id="viewCheques" class="view-section">
+            <div class="top-nav">
+                <button class="btn-back" onclick="showHomeView()">→ خانه</button>
+                <div class="nav-title-box">
+                    <img class="nav-mini-logo" alt="تراز">
+                    <span class="nav-title">یادآور چک‌ها</span>
+                </div>
+            </div>
+
+            <div class="loan-stats-grid">
+                <div class="stat-box">
+                    <div class="s-label">چک‌های ورودی در انتظار وصول</div>
+                    <div class="s-val" id="totalInChequesVal" style="color: var(--accent-light);">۰ ت</div>
+                </div>
+                <div class="stat-box">
+                    <div class="s-label">چک‌های خروجی (تعهد پرداخت)</div>
+                    <div class="s-val" id="totalOutChequesVal" style="color: var(--danger-light);">۰ ت</div>
+                </div>
+            </div>
+
+            <div class="panel-card">
+                <div style="font-size:12.5px; font-weight:800; color:var(--gold-light); margin-bottom:8px;">🎫 ثبت چک جدید</div>
+                <div class="grid-2">
+                    <div class="field-group">
+                        <label>نوع چک</label>
+                        <select id="chkType" class="input-control">
+                            <option value="in">🟢 چک ورودی (دریافتی از مشتری)</option>
+                            <option value="out">🔴 چک خروجی (صادره توسط من)</option>
+                        </select>
+                    </div>
+                    <div class="field-group">
+                        <label>طرف حساب / بانک</label>
+                        <input type="text" id="chkParty" class="input-control" placeholder="مثلاً چک صیادی بانک ملی">
+                    </div>
+                </div>
+                <div class="grid-2">
+                    <div class="field-group">
+                        <label>تاریخ سررسید چک (تقویم)</label>
+                        <input type="text" id="chkDate" readonly class="input-control date-picker-trigger" onclick="openJalaliDatePicker('chkDate')">
+                    </div>
+                    <div class="field-group">
+                        <label>مبلغ چک (تومان)</label>
+                        <input type="text" id="chkAmount" inputmode="numeric" class="input-control amount-field" placeholder="0" oninput="formatNumberInput(this)">
+                    </div>
+                </div>
+                <button class="btn-action" onclick="addNewCheque()">＋ ثبت چک و فعال‌سازی یادآور</button>
+            </div>
+
+            <div id="chequesStack" class="entries-stack"></div>
+        </section>
+
+        <!-- ==================== صفحه ۸: لیست وام‌های من (+درصد سود) ==================== -->
+        <section id="viewLoanList" class="view-section">
+            <div class="top-nav">
+                <button class="btn-back" onclick="showHomeView()">→ خانه</button>
+                <div class="nav-title-box">
+                    <img class="nav-mini-logo" alt="تراز">
+                    <span class="nav-title">لیست وام‌های من</span>
+                </div>
+                <button class="mini-btn" style="background:var(--accent); color:#fff;" onclick="openNewLoanModal()">＋ وام جدید</button>
+            </div>
+
+            <div class="search-bar-wrap">
+                <input type="text" id="searchLoanInput" placeholder="🔍 جستجوی نام بانک یا وام..." oninput="renderSavedLoansList()">
+                <button class="btn-delete-all" onclick="deleteAllLoans()">🗑 حذف همه</button>
+            </div>
+
+            <div id="savedLoansContainer" class="entries-stack"></div>
+        </section>
+
+        <!-- ==================== صفحه ۹: جزئیات پرونده وام ==================== -->
+        <section id="viewLoanDetail" class="view-section">
+            <div class="top-nav">
+                <button class="btn-back" onclick="showSavedLoansView()">→ لیست وام‌ها</button>
+                <div class="nav-title-box">
+                    <img class="nav-mini-logo" alt="تراز">
+                    <span class="nav-title" id="activeLoanBankTitle">نام بانک</span>
+                </div>
+                <div class="nav-actions">
+                    <button class="icon-btn gold" onclick="openEditLoanModal()" title="ویرایش">✎</button>
+                    <button class="icon-btn danger" onclick="deleteActiveLoan()" title="حذف">🗑</button>
+                </div>
+            </div>
+
+            <div class="inline-total-banner" style="margin-bottom:10px;">
+                <div class="total-sub-details" style="border-top:none; margin-top:0; padding-top:0;">
+                    <span>اصل وام: <b id="loanPrincipalInfo">۰</b></span>
+                    <span>نرخ سود: <b id="loanInterestPercentInfo" style="color:var(--gold-light);">۰٪</b></span>
+                    <span>کل با سود: <b id="loanTotalWithInterestInfo" style="color:var(--accent-light);">۰</b></span>
+                </div>
+            </div>
+
+            <div class="loan-stats-grid">
+                <div class="stat-box">
+                    <div class="s-label">اقساط باقی‌مانده</div>
+                    <div class="s-val" id="loanRemCount">۰ از ۰</div>
+                </div>
+                <div class="stat-box">
+                    <div class="s-label">مبلغ باقی‌مانده وام</div>
+                    <div class="s-val" id="loanRemAmount" style="color: var(--accent-light);">۰ تومان</div>
+                </div>
+            </div>
+
+            <div id="installmentsStack" class="entries-stack"></div>
+        </section>
+
+        <!-- ==================== صفحه ۱۰: لیست پروژه‌های حقوق و دستمزد کارمندان ==================== -->
+        <section id="viewPayrollProjects" class="view-section">
+            <div class="top-nav">
+                <button class="btn-back" onclick="showHomeView()">→ خانه</button>
+                <div class="nav-title-box">
+                    <img class="nav-mini-logo" alt="تراز">
+                    <span class="nav-title">پروژه‌های حقوق و پرسنل</span>
+                </div>
+                <button class="mini-btn" style="background:var(--accent); color:#fff;" onclick="openNewPayrollProjectModal()">＋ پروژه جدید</button>
+            </div>
+
+            <div class="search-bar-wrap">
+                <input type="text" id="searchPayrollInput" placeholder="🔍 جستجوی عنوان پروژه یا بخش..." oninput="renderPayrollProjectsList()">
+            </div>
+
+            <div id="payrollProjectsContainer" class="entries-stack"></div>
+        </section>
+
+        <!-- ==================== صفحه ۱۱: داخل یک پروژه حقوق و لیست کارمندان ==================== -->
+        <section id="viewPayrollDetail" class="view-section">
+            <div class="top-nav">
+                <button class="btn-back" onclick="showPayrollProjectsView()">→ لیست پروژه‌ها</button>
+                <div class="nav-title-box">
+                    <img class="nav-mini-logo" alt="تراز">
+                    <span class="nav-title" id="activePayrollTitle">عنوان پروژه</span>
+                </div>
+                <div class="nav-actions">
+                    <button class="icon-btn gold" onclick="renameActivePayrollProject()" title="تغییر نام پروژه">✎</button>
+                    <button class="icon-btn danger" onclick="deleteActivePayrollProject()" title="حذف پروژه">🗑</button>
+                </div>
+            </div>
+
+            <!-- بنر جمع کل حقوق پروژه -->
+            <div class="inline-total-banner">
+                <div class="total-main-row">
+                    <div>
+                        <div style="font-size: 12px; color: var(--text-secondary); font-weight: 700;">مجموع کل قابل پرداخت به کارمندان:</div>
+                        <div style="font-size: 11px; color: var(--gold-light); margin-top: 2px;" id="payrollEmpCount">۰ کارمند</div>
+                    </div>
+                    <div class="total-left" id="payrollTotalNetSum">۰ <small>تومان</small></div>
+                </div>
+                <div class="total-sub-details">
+                    <span>پرداخت شده: <b id="payrollPaidSum" style="color:var(--accent-light);">۰ ت</b></span>
+                    <span>مانده پرداخت‌نشده: <b id="payrollRemainingSum" style="color:var(--gold-light);">۰ ت</b></span>
+                </div>
+            </div>
+
+            <button class="btn-action" style="margin-bottom:14px;" onclick="openEmployeeModal()">＋ افزودن کارمند جدید به این پروژه</button>
+
+            <div id="employeesStack" class="entries-stack"></div>
+        </section>
+
+    </div>
+
+    <!-- ==================== مودال تقویم شمسی هوشمند (تا سال ۱۴۲۰ + سال تولد) ==================== -->
+    <div class="modal-backdrop" id="jalaliPickerModal" style="z-index: 650;">
+        <div class="modal-box">
+            <div class="modal-head">
+                <span>📅 انتخاب تاریخ شمسی</span>
+                <button class="icon-btn danger" onclick="closeJalaliDatePicker()">✕</button>
+            </div>
+            <div class="grid-2">
+                <div class="field-group">
+                    <label>انتخاب سال</label>
+                    <select id="jpYearSelect" class="input-control" onchange="renderJalaliDaysGrid()"></select>
+                </div>
+                <div class="field-group">
+                    <label>انتخاب ماه</label>
+                    <select id="jpMonthSelect" class="input-control" onchange="renderJalaliDaysGrid()">
+                        <option value="1">فروردین</option>
+                        <option value="2">اردیبهشت</option>
+                        <option value="3">خرداد</option>
+                        <option value="4">تیر</option>
+                        <option value="5">مرداد</option>
+                        <option value="6">شهریور</option>
+                        <option value="7">مهر</option>
+                        <option value="8">آبان</option>
+                        <option value="9">آذر</option>
+                        <option value="10">دی</option>
+                        <option value="11">بهمن</option>
+                        <option value="12">اسفند</option>
+                    </select>
+                </div>
+            </div>
+            <div style="font-size:11px; color:var(--text-secondary); margin-top:4px;">انتخاب روز ماه:</div>
+            <div class="jalali-days-grid" id="jpDaysGrid"></div>
+            <div class="modal-btns">
+                <button class="m-btn confirm" onclick="confirmJalaliDateSelection()">تایید و درج تاریخ</button>
+                <button class="m-btn cancel" onclick="selectTodayInPicker()">امروز</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== مودال افزودن / ویرایش کارمند (مشخصات کامل + حقوق و مزایا) ==================== -->
+    <div class="modal-backdrop" id="employeeModal">
+        <div class="modal-box">
+            <div class="modal-head" id="empModalTitle">👔 ثبت مشخصات و حقوق کارمند</div>
+
+            <div class="grid-2">
+                <div class="field-group">
+                    <label>نام و نام خانوادگی کارمند *</label>
+                    <input type="text" id="empName" class="input-control" placeholder="مثلاً: علی محمدی">
+                </div>
+                <div class="field-group">
+                    <label>سمت / عنوان شغلی</label>
+                    <input type="text" id="empRole" class="input-control" placeholder="مثلاً: استادکار / فروشنده">
+                </div>
+            </div>
+
+            <div class="grid-3">
+                <div class="field-group">
+                    <label>شماره ملی</label>
+                    <input type="tel" id="empNationalId" maxlength="10" class="input-control" placeholder="0012345678">
+                </div>
+                <div class="field-group">
+                    <label>تاریخ تولد (تقویم)</label>
+                    <input type="text" id="empBirthDate" readonly class="input-control date-picker-trigger" onclick="openJalaliDatePicker('empBirthDate', true)" placeholder="۱۳۷۲/۰۵/۱۰">
+                </div>
+                <div class="field-group">
+                    <label>شماره موبایل</label>
+                    <input type="tel" id="empPhone" maxlength="11" class="input-control" placeholder="0912...">
+                </div>
+            </div>
+
+            <hr style="border:none; border-top:1px dashed var(--border); margin:10px 0;">
+            <div style="font-size:11.5px; font-weight:800; color:var(--gold-light); margin-bottom:8px;">💵 اطلاعات مالی، عیدی، پورسانت و وام کارمند:</div>
+
+            <div class="grid-2">
+                <div class="field-group">
+                    <label>حقوق و دستمزد پایه (تومان)</label>
+                    <input type="text" id="empBaseSalary" inputmode="numeric" class="input-control amount-field" placeholder="0" oninput="formatNumberInput(this)">
+                </div>
+                <div class="field-group">
+                    <label>عیدی و سنوات (تومان)</label>
+                    <input type="text" id="empBonus" inputmode="numeric" class="input-control amount-field" placeholder="0" oninput="formatNumberInput(this)">
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div class="field-group">
+                    <label>پورسانت و پاداش (تومان)</label>
+                    <input type="text" id="empCommission" inputmode="numeric" class="input-control amount-field" placeholder="0" oninput="formatNumberInput(this)">
+                </div>
+                <div class="field-group">
+                    <label>وام / مساعده دریافتی (تومان)</label>
+                    <input type="text" id="empLoanAdvance" inputmode="numeric" class="input-control amount-field" style="color:var(--danger-light);" placeholder="0" oninput="formatNumberInput(this)">
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div class="field-group">
+                    <label>نحوه اعمال وام/مساعده در فیش</label>
+                    <select id="empLoanMode" class="input-control">
+                        <option value="deduct">کسر از حقوق این ماه (مساعده)</option>
+                        <option value="record">فقط ثبت درخواست وام (بدون کسر)</option>
+                    </select>
+                </div>
+                <div class="field-group">
+                    <label>تاریخ پرداخت حقوق</label>
+                    <input type="text" id="empPayDate" readonly class="input-control date-picker-trigger" onclick="openJalaliDatePicker('empPayDate')">
+                </div>
+            </div>
+
+            <div class="field-group">
+                <label>توضیحات مدیر (شماره شبا، ساعت اضافه‌کاری و...)</label>
+                <input type="text" id="empNote" class="input-control" placeholder="یادداشت اختیاری...">
+            </div>
+
+            <div class="modal-btns">
+                <button class="m-btn confirm" onclick="saveEmployeeRecord()">ذخیره پرونده کارمند</button>
+                <button class="m-btn cancel" onclick="closeEmployeeModal()">انصراف</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== مودال ساخت پروژه حقوق و دستمزد ==================== -->
+    <div class="modal-backdrop" id="payrollProjectModal">
+        <div class="modal-box">
+            <div class="modal-head">👔 ایجاد پروژه / لیست حقوق جدید</div>
+            <div class="field-group">
+                <label>عنوان پروژه یا دوره حقوق را وارد کنید:</label>
+                <input type="text" id="payrollProjNameInput" class="input-control" placeholder="مثلاً: حقوق پرسنل کارگاه - آبان ۱۴۰۵">
+            </div>
+            <div class="modal-btns">
+                <button class="m-btn confirm" onclick="confirmNewPayrollProject()">ایجاد و ورود به لیست</button>
+                <button class="m-btn cancel" onclick="closePayrollProjectModal()">انصراف</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== ماشین‌حساب شناور مشکی مات شیشه‌ای ==================== -->
+    <div class="calc-modal-overlay" id="floatingCalcModal">
+        <div class="glass-calc-wrapper">
+            <div class="calc-header">
+                <div class="calc-mode-switch">
+                    <button class="calc-mode-btn active" id="btnModeBasic" onclick="setCalcMode('basic')">ساده</button>
+                    <button class="calc-mode-btn" id="btnModeSci" onclick="setCalcMode('sci')">پیشرفته</button>
+                </div>
+                <div class="calc-top-tools">
+                    <button class="calc-tool-btn" onclick="toggleCalcHistory()" title="تاریخچه">🕒</button>
+                    <button class="calc-tool-btn" style="color:var(--danger-light);" onclick="closeFloatingCalc()">✕</button>
+                </div>
+            </div>
+
+            <div class="calc-history-drawer" id="calcHistoryDrawer">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; color:var(--text-muted); font-size:11px;">
+                    <span>تاریخچه محاسبات:</span>
+                    <span style="color:var(--danger-light); cursor:pointer;" onclick="clearCalcHistory()">پاک کردن ✕</span>
+                </div>
+                <div id="calcHistoryList"></div>
+            </div>
+
+            <div class="calc-screen">
+                <div class="calc-expression" id="calcExprView"></div>
+                <div class="calc-output" id="calcResultView">0</div>
+            </div>
+
+            <div class="calc-keys-grid" id="calcGridContainer">
+                <button class="ckey fn sci-only" onclick="calcInputScientific('Math.sin(')">sin</button>
+                <button class="ckey fn sci-only" onclick="calcInputScientific('Math.cos(')">cos</button>
+                <button class="ckey fn sci-only" onclick="calcInputScientific('Math.sqrt(')">√</button>
+                <button class="ckey fn sci-only" onclick="calcInputOp('^')">xʸ</button>
+                <button class="ckey fn sci-only" onclick="calcInputScientific('Math.PI')">π</button>
+
+                <button class="ckey clear" onclick="calcClearAll()">AC</button>
+                <button class="ckey fn" onclick="calcDeleteLast()">⌫</button>
+                <button class="ckey fn sci-only" onclick="calcInputSymbol('(')">(</button>
+                <button class="ckey fn sci-only" onclick="calcInputSymbol(')')">)</button>
+                <button class="ckey op" onclick="calcInputOp('%')">%</button>
+                <button class="ckey op" onclick="calcInputOp('/')">÷</button>
+
+                <button class="ckey" onclick="calcInputDigit('7')">7</button>
+                <button class="ckey" onclick="calcInputDigit('8')">8</button>
+                <button class="ckey" onclick="calcInputDigit('9')">9</button>
+                <button class="ckey op" onclick="calcInputOp('*')">×</button>
+
+                <button class="ckey" onclick="calcInputDigit('4')">4</button>
+                <button class="ckey" onclick="calcInputDigit('5')">5</button>
+                <button class="ckey" onclick="calcInputDigit('6')">6</button>
+                <button class="ckey op" onclick="calcInputOp('-')">−</button>
+
+                <button class="ckey" onclick="calcInputDigit('1')">1</button>
+                <button class="ckey" onclick="calcInputDigit('2')">2</button>
+                <button class="ckey" onclick="calcInputDigit('3')">3</button>
+                <button class="ckey op" onclick="calcInputOp('+')">+</button>
+
+                <button class="ckey" onclick="calcInputDigit('0')">0</button>
+                <button class="ckey" onclick="calcInputDigit('00')">00</button>
+                <button class="ckey" onclick="calcInputDot('.')">.</button>
+                <button class="ckey equal" onclick="calcExecuteEqual()">=</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== مودال حساب کاربری و ورود گوگل ==================== -->
+    <div class="modal-backdrop" id="accountModal">
+        <div class="modal-box">
+            <div class="modal-head">👤 حساب کاربری و پشتیبان‌گیری</div>
+
+            <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:14px; padding:12px; margin-bottom:12px; text-align:center;">
+                <div style="font-size:12px; color:#fff; font-weight:700; margin-bottom:6px;">اتصال با جیمیل / اکانت گوگل</div>
+                <p style="font-size:11px; color:var(--text-muted); margin-bottom:10px; line-height:1.5;">
+                    در صورت اتصال به اینترنت می‌توانید با گوگل وارد شوید. در حالت آفلاین نیز تمام بخش‌های برنامه بدون محدودیت کار می‌کنند.
+                </p>
+                <div id="googleBtnContainer" style="display:flex; justify-content:center; margin-bottom:8px;"></div>
+                <div id="googleUserInfo" style="display:none; font-size:12px; color:var(--accent-light); font-weight:800;">
+                    ✓ متصل به حساب گوگل
+                    <button class="mini-btn" style="display:inline-block; margin-right:8px; font-size:10px;" onclick="signOutGoogle()">خروج</button>
+                </div>
+            </div>
+
+            <div class="field-group" style="margin-bottom:10px;">
+                <label>نام نمایشی مدیر / کاربر (حالت آفلاین):</label>
+                <input type="text" id="manualUserNameInput" class="input-control" placeholder="نام خود را بنویسید">
+            </div>
+            <button class="btn-action" onclick="saveManualAccountName()">ذخیره نام</button>
+
+            <hr style="border:none; border-top:1px dashed var(--border); margin:14px 0;">
+
+            <div style="font-size:12px; font-weight:800; color:var(--gold-light); margin-bottom:6px;">🛡️ پشتیبان‌گیری کامل اطلاعات</div>
+            <div class="grid-2">
+                <button class="btn-action" onclick="exportFullBackup()">📥 دانلود فایل بکاپ</button>
+                <button class="btn-action gold-btn" onclick="document.getElementById('restoreFileInput').click()">📤 بازگردانی بکاپ</button>
+                <input type="file" id="restoreFileInput" accept=".json" style="display:none;" onchange="importFullBackup(event)">
+            </div>
+
+            <div class="modal-btns">
+                <button class="m-btn cancel" onclick="closeAccountModal()">بستن</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- مودال ساخت/ویرایش محاسبه -->
+    <div class="modal-backdrop" id="calcNameModal">
+        <div class="modal-box">
+            <div class="modal-head" id="calcModalTitle">ایجاد محاسبه جدید</div>
+            <div class="field-group">
+                <label>نام محاسبه:</label>
+                <input type="text" id="calcNameInput" class="input-control" placeholder="مثلاً: پروژه کافه، فاکتور آبان و...">
+            </div>
+            <div class="modal-btns">
+                <button class="m-btn confirm" onclick="confirmCalcNameModal()">ذخیره</button>
+                <button class="m-btn cancel" onclick="closeCalcNameModal()">انصراف</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- مودال ویرایش ردیف -->
+    <div class="modal-backdrop" id="editEntryModal">
+        <div class="modal-box">
+            <div class="modal-head">ویرایش ردیف</div>
+            <div class="grid-2">
+                <div class="field-group">
+                    <label>روز هفته</label>
+                    <select id="editEntryDay" class="input-control">
+                        <option value="شنبه">شنبه</option>
+                        <option value="یکشنبه">یکشنبه</option>
+                        <option value="دوشنبه">دوشنبه</option>
+                        <option value="سه‌شنبه">سه‌شنبه</option>
+                        <option value="چهارشنبه">چهارشنبه</option>
+                        <option value="پنجشنبه">پنجشنبه</option>
+                        <option value="جمعه">جمعه</option>
+                    </select>
+                </div>
+                <div class="field-group">
+                    <label>تاریخ (تقویم)</label>
+                    <input type="text" id="editEntryDate" readonly class="input-control date-picker-trigger" onclick="openJalaliDatePicker('editEntryDate')">
+                </div>
+            </div>
+            <div class="field-group" style="margin-bottom: 9px;">
+                <label>عنوان / توضیح</label>
+                <input type="text" id="editEntryNote" class="input-control">
+            </div>
+            <div class="field-group">
+                <label>مبلغ (تومان)</label>
+                <input type="text" id="editEntryAmount" inputmode="numeric" class="input-control amount-field" oninput="formatNumberInput(this)">
+            </div>
+            <div class="modal-btns">
+                <button class="m-btn confirm" onclick="saveEditedEntry()">ذخیره تغییرات</button>
+                <button class="m-btn cancel" onclick="closeEditEntryModal()">انصراف</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- مودال کسر مبلغ از ردیف -->
+    <div class="modal-backdrop" id="subtractItemModal">
+        <div class="modal-box">
+            <div class="modal-head">➖ کسر مبلغ از این ردیف</div>
+            <p id="subtractItemInfo" style="font-size: 12px; color: var(--text-muted); margin-bottom: 10px;"></p>
+            <div class="field-group" style="margin-bottom: 9px;">
+                <label>مبلغ کسر از این ردیف (تومان):</label>
+                <input type="text" id="subtractItemAmount" inputmode="numeric" class="input-control amount-field" style="color: var(--danger-light);" placeholder="0" oninput="formatNumberInput(this)">
+            </div>
+            <div class="modal-btns">
+                <button class="m-btn confirm" style="background: var(--danger);" onclick="confirmSubtractFromItem()">کسر از مبلغ</button>
+                <button class="m-btn cancel" onclick="closeSubtractItemModal()">انصراف</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== مودال ثبت وام (همراه با درصد سود وام) ==================== -->
+    <div class="modal-backdrop" id="loanModal">
+        <div class="modal-box">
+            <div class="modal-head" id="loanModalTitle">🏦 ثبت وام جدید (+محاسبه سود)</div>
+            <div class="field-group" style="margin-bottom: 8px;">
+                <label>نام بانک / عنوان وام:</label>
+                <input type="text" id="loanBankInput" class="input-control" placeholder="مثلاً: بانک ملت">
+            </div>
+            <div class="grid-2">
+                <div class="field-group">
+                    <label>اصل مبلغ وام (تومان):</label>
+                    <input type="text" id="loanPrincipalInput" inputmode="numeric" class="input-control amount-field" placeholder="100,000,000" oninput="formatNumberInput(this); previewLoanCalculation();">
+                </div>
+                <div class="field-group">
+                    <label>درصد سود وام (%):</label>
+                    <input type="number" id="loanInterestInput" step="0.5" class="input-control" value="23" placeholder="مثلاً 23" oninput="previewLoanCalculation()">
+                </div>
+            </div>
+            <div class="grid-2">
+                <div class="field-group">
+                    <label>تعداد اقساط (چند ماهه؟)</label>
+                    <input type="number" id="loanMonthsInput" class="input-control" value="12" oninput="previewLoanCalculation()">
+                </div>
+                <div class="field-group">
+                    <label>تاریخ اولین قسط (تقویم)</label>
+                    <input type="text" id="loanStartDateInput" readonly class="input-control date-picker-trigger" onclick="openJalaliDatePicker('loanStartDateInput')">
+                </div>
+            </div>
+            <!-- پیش‌نمایش زنده کل بازپرداخت با سود -->
+            <div style="background:rgba(16,185,129,0.08); border:1px dashed var(--border-focus); border-radius:10px; padding:8px 10px; font-size:11.5px; color:var(--text-secondary);">
+                <div>کل بازپرداخت با سود: <b id="loanPreviewTotal" style="color:var(--accent-light);">۰ تومان</b></div>
+                <div style="margin-top:3px;">مبلغ هر قسط ماهانه: <b id="loanPreviewMonthly" style="color:var(--gold-light);">۰ تومان</b></div>
+            </div>
+            <div class="modal-btns">
+                <button class="m-btn confirm" onclick="confirmLoanModal()">ساخت جدول اقساط</button>
+                <button class="m-btn cancel" onclick="closeLoanModal()">انصراف</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- مودال ویرایش قسط -->
+    <div class="modal-backdrop" id="editInstModal">
+        <div class="modal-box">
+            <div class="modal-head">ویرایش قسط</div>
+            <div class="field-group" style="margin-bottom: 9px;">
+                <label>عنوان قسط:</label>
+                <input type="text" id="editInstTitle" class="input-control">
+            </div>
+            <div class="field-group" style="margin-bottom: 9px;">
+                <label>تاریخ سررسید (تقویم):</label>
+                <input type="text" id="editInstDate" readonly class="input-control date-picker-trigger" onclick="openJalaliDatePicker('editInstDate')">
+            </div>
+            <div class="field-group">
+                <label>مبلغ قسط (تومان):</label>
+                <input type="text" id="editInstAmount" inputmode="numeric" class="input-control amount-field" oninput="formatNumberInput(this)">
+            </div>
+            <div class="modal-btns">
+                <button class="m-btn confirm" onclick="saveEditedInstallment()">ذخیره</button>
+                <button class="m-btn cancel" onclick="closeEditInstModal()">انصراف</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /* =====================================================================
+           ۱. ساخت لوگوی نئونی «تراز»
+           ===================================================================== */
+        function setupCrossPlatformPWA() {
+            const canvas = document.createElement('canvas');
+            canvas.width = 512;
+            canvas.height = 512;
+            const ctx = canvas.getContext('2d');
+
+            const bgGrad = ctx.createRadialGradient(256, 220, 40, 256, 256, 320);
+            bgGrad.addColorStop(0, '#0f292e');
+            bgGrad.addColorStop(0.6, '#09131c');
+            bgGrad.addColorStop(1, '#05080d');
+            ctx.fillStyle = bgGrad;
+            ctx.fillRect(0, 0, 512, 512);
+
+            const frameGrad = ctx.createLinearGradient(0, 0, 512, 512);
+            frameGrad.addColorStop(0, '#34d399');
+            frameGrad.addColorStop(0.5, '#059669');
+            frameGrad.addColorStop(1, '#f59e0b');
+            ctx.strokeStyle = frameGrad;
+            ctx.lineWidth = 12;
+            ctx.strokeRect(22, 22, 468, 468);
+
+            const barGrad = ctx.createLinearGradient(0, 110, 0, 260);
+            barGrad.addColorStop(0, '#6ee7b7');
+            barGrad.addColorStop(1, '#059669');
+            ctx.fillStyle = barGrad;
+
+            const bars = [
+                { x: 145, y: 215, w: 22, h: 45 },
+                { x: 178, y: 185, w: 22, h: 75 },
+                { x: 211, y: 155, w: 22, h: 105 },
+                { x: 244, y: 125, w: 22, h: 135 },
+                { x: 277, y: 95,  w: 22, h: 165 }
+            ];
+            bars.forEach(b => ctx.fillRect(b.x, b.y, b.w, b.h));
+
+            const arrowGrad = ctx.createLinearGradient(130, 280, 350, 120);
+            arrowGrad.addColorStop(0, '#10b981');
+            arrowGrad.addColorStop(1, '#fbbf24');
+            ctx.strokeStyle = arrowGrad;
+            ctx.lineWidth = 14;
+            ctx.lineCap = 'round';
+            ctx.beginPath();
+            ctx.moveTo(135, 275);
+            ctx.quadraticCurveTo(240, 270, 335, 135);
+            ctx.stroke();
+
+            ctx.fillStyle = '#ecfdf5';
+            ctx.font = '900 110px system-ui, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('تراز', 256, 405);
+
+            const dataUrl = canvas.toDataURL('image/png');
+            document.getElementById('mainLogoImg').src = dataUrl;
+            document.querySelectorAll('.nav-mini-logo').forEach(img => img.src = dataUrl);
+
+            const appleLink = document.createElement('link');
+            appleLink.rel = 'apple-touch-icon';
+            appleLink.href = dataUrl;
+            document.head.appendChild(appleLink);
+        }
+
+        /* =====================================================================
+           ۲. دیتابیس محلی برنامه (سازگار با نسخه‌های قبلی)
+           ===================================================================== */
+        const DB_KEY = 'taraz_pro_calculations_v4';
+        let state = {
+            userProfile: { name: 'کاربر مهمان', email: '', picture: '', isGoogle: false },
+            calculations: [],
+            loans: [],
+            bankAccounts: [],
+            bankTransactions: [],
+            peopleLedger: [],
+            projectEstimates: [],
+            cheques: [],
+            payrollProjects: [],
+            calcHistory: [],
+            activeCalcId: null,
+            activeLoanId: null,
+            activePayrollId: null
+        };
+
+        let calcModalMode = 'create';
+        let renamingCalcId = null;
+        let editingEntryId = null;
+        let subtractingEntryId = null;
+        let loanModalMode = 'create';
+        let editingInstId = null;
+        let editingEmpId = null;
+
+        function loadDatabase() {
+            const saved = localStorage.getItem(DB_KEY) || localStorage.getItem('taraz_pro_calculations_v3') || localStorage.getItem('taraz_pro_calculations_v2');
+            if (saved) {
+                try {
+                    const parsed = JSON.parse(saved);
+                    state.userProfile = parsed.userProfile || { name: 'کاربر مهمان', email: '', picture: '', isGoogle: false };
+                    state.calculations = parsed.calculations || [];
+                    state.loans = parsed.loans || [];
+                    state.bankAccounts = parsed.bankAccounts || [];
+                    state.bankTransactions = parsed.bankTransactions || [];
+                    state.peopleLedger = parsed.peopleLedger || [];
+                    state.projectEstimates = parsed.projectEstimates || [];
+                    state.cheques = parsed.cheques || [];
+                    state.payrollProjects = parsed.payrollProjects || [];
+                    state.calcHistory = parsed.calcHistory || [];
+                    state.activeCalcId = parsed.activeCalcId || null;
+                    state.activeLoanId = parsed.activeLoanId || null;
+                    state.activePayrollId = parsed.activePayrollId || null;
+                } catch (e) {}
+            }
+            applyUserProfileUI();
+            updateHomeBadges();
+        }
+
+        function saveDatabase() {
+            localStorage.setItem(DB_KEY, JSON.stringify(state));
+            updateHomeBadges();
+        }
+
+        function updateHomeBadges() {
+            document.getElementById('savedCountBadge').textContent = `${state.calculations.length.toLocaleString('fa-IR')} فایل`;
+            document.getElementById('savedLoansBadge').textContent = `${state.loans.length.toLocaleString('fa-IR')} وام`;
+            document.getElementById('bankCountBadge').textContent = `${state.bankAccounts.length.toLocaleString('fa-IR')} حساب`;
+            document.getElementById('peopleCountBadge').textContent = `${state.peopleLedger.length.toLocaleString('fa-IR')} مورد`;
+            document.getElementById('estCountBadge').textContent = `${state.projectEstimates.length.toLocaleString('fa-IR')} پروژه`;
+            document.getElementById('chequesCountBadge').textContent = `${state.cheques.length.toLocaleString('fa-IR')} چک`;
+            document.getElementById('payrollCountBadge').textContent = `${state.payrollProjects.length.toLocaleString('fa-IR')} لیست`;
+        }
+
+        /* =====================================================================
+           ۳. تقویم شمسی لمسی هوشمند (تا سال ۱۴۲۰ + حالت تاریخ تولد)
+           ===================================================================== */
+        let activeDateInputId = null;
+        let selectedJalaliDay = 1;
+
+        function openJalaliDatePicker(inputId, isBirthDate = false) {
+            activeDateInputId = inputId;
+            const currentVal = document.getElementById(inputId).value.trim();
+            const today = getTodayPersian().dateStr;
+            const baseStr = currentVal || (isBirthDate ? '۱۳۷۰/۰۱/۰۱' : today);
+
+            const clean = toEnglishDigits(baseStr).replace(/[^0-9/]/g, '');
+            const parts = clean.split('/');
+            let y = parseInt(parts[0], 10) || 1405;
+            let m = parseInt(parts[1], 10) || 1;
+            let d = parseInt(parts[2], 10) || 1;
+
+            const yearSelect = document.getElementById('jpYearSelect');
+            yearSelect.innerHTML = '';
+            const startYear = isBirthDate ? 1320 : 1395;
+            const endYear = 1420;
+
+            for (let yr = startYear; yr <= endYear; yr++) {
+                const opt = document.createElement('option');
+                opt.value = yr;
+                opt.textContent = toPersianDigits(yr);
+                if (yr === y) opt.selected = true;
+                yearSelect.appendChild(opt);
+            }
+
+            document.getElementById('jpMonthSelect').value = m;
+            selectedJalaliDay = d;
+            renderJalaliDaysGrid();
+            document.getElementById('jalaliPickerModal').classList.add('active');
+        }
+
+        function renderJalaliDaysGrid() {
+            const m = parseInt(document.getElementById('jpMonthSelect').value, 10);
+            const maxDays = m <= 6 ? 31 : (m <= 11 ? 30 : 29);
+            if (selectedJalaliDay > maxDays) selectedJalaliDay = maxDays;
+
+            const grid = document.getElementById('jpDaysGrid');
+            grid.innerHTML = '';
+
+            for (let i = 1; i <= maxDays; i++) {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'j-day-btn' + (i === selectedJalaliDay ? ' selected' : '');
+                btn.textContent = toPersianDigits(i);
+                btn.onclick = () => {
+                    selectedJalaliDay = i;
+                    renderJalaliDaysGrid();
+                };
+                grid.appendChild(btn);
+            }
+        }
+
+        function confirmJalaliDateSelection() {
+            if (!activeDateInputId) return;
+            const y = document.getElementById('jpYearSelect').value;
+            const m = String(document.getElementById('jpMonthSelect').value).padStart(2, '0');
+            const d = String(selectedJalaliDay).padStart(2, '0');
+            const formatted = `${toPersianDigits(y)}/${toPersianDigits(m)}/${toPersianDigits(d)}`;
+            document.getElementById(activeDateInputId).value = formatted;
+            closeJalaliDatePicker();
+        }
+
+        function selectTodayInPicker() {
+            const today = getTodayPersian().dateStr;
+            if (activeDateInputId) {
+                document.getElementById(activeDateInputId).value = today;
+            }
+            closeJalaliDatePicker();
+        }
+
+        function closeJalaliDatePicker() {
+            activeDateInputId = null;
+            document.getElementById('jalaliPickerModal').classList.remove('active');
+        }
+
+        /* =====================================================================
+           ۴. سامانه جامع مدیریت پرسنل، حقوق و دستمزد (HR & Payroll)
+           ===================================================================== */
+        function showPayrollProjectsView() {
+            document.getElementById('searchPayrollInput').value = '';
+            renderPayrollProjectsList();
+            switchView('viewPayrollProjects');
+        }
+
+        function openNewPayrollProjectModal() {
+            document.getElementById('payrollProjNameInput').value = '';
+            document.getElementById('payrollProjectModal').classList.add('active');
+            setTimeout(() => document.getElementById('payrollProjNameInput').focus(), 100);
+        }
+
+        function closePayrollProjectModal() {
+            document.getElementById('payrollProjectModal').classList.remove('active');
+        }
+
+        function confirmNewPayrollProject() {
+            const title = document.getElementById('payrollProjNameInput').value.trim();
+            if (!title) return alert('عنوان پروژه یا لیست حقوق را وارد کنید.');
+
+            const newProj = {
+                id: 'pay_' + Date.now(),
+                title,
+                createdAt: getTodayPersian().dateStr,
+                employees: []
+            };
+            state.payrollProjects.unshift(newProj);
+            saveDatabase();
+            closePayrollProjectModal();
+            openPayrollProjectDetail(newProj.id);
+        }
+
+        function openPayrollProjectDetail(projId) {
+            state.activePayrollId = projId;
+            saveDatabase();
+            renderActivePayrollProject();
+            switchView('viewPayrollDetail');
+        }
+
+        function getActivePayrollObj() {
+            return state.payrollProjects.find(p => p.id === state.activePayrollId);
+        }
+
+        function calcEmployeeNetPay(emp) {
+            const base = Number(emp.baseSalary) || 0;
+            const bonus = Number(emp.bonus) || 0;
+            const comm = Number(emp.commission) || 0;
+            const loan = Number(emp.loanAdvance) || 0;
+            const gross = base + bonus + comm;
+            const net = emp.loanMode === 'deduct' ? Math.max(0, gross - loan) : gross;
+            return { gross, net };
+        }
+
+        function renderPayrollProjectsList() {
+            const container = document.getElementById('payrollProjectsContainer');
+            const q = document.getElementById('searchPayrollInput').value.trim().toLowerCase();
+            container.innerHTML = '';
+
+            const filtered = state.payrollProjects.filter(p => p.title.toLowerCase().includes(q));
+            if (filtered.length === 0) {
+                container.innerHTML = `<div class="empty-box">هنوز پروژه یا لیست حقوقی ثبت نشده است.<br>از دکمه بالا روی «＋ پروژه جدید» بزنید.</div>`;
+                return;
+            }
+
+            filtered.forEach(proj => {
+                let totalPayroll = 0;
+                proj.employees.forEach(emp => {
+                    totalPayroll += calcEmployeeNetPay(emp).net;
+                });
+
+                const card = document.createElement('div');
+                card.className = 'item-box';
+                card.style.cursor = 'pointer';
+                card.onclick = () => openPayrollProjectDetail(proj.id);
+                card.innerHTML = `
+                    <div>
+                        <div style="font-size:14px; font-weight:800; color:#fff;">👔 ${proj.title}</div>
+                        <div style="font-size:11.5px; color:var(--text-muted); margin-top:3px;">
+                            ${proj.employees.length.toLocaleString('fa-IR')} کارمند • جمع حقوق: 
+                            <b style="color:var(--accent-light);">${totalPayroll.toLocaleString('fa-IR')} ت</b>
+                        </div>
+                    </div>
+                    <div class="nav-actions" onclick="event.stopPropagation()">
+                        <button class="icon-btn danger" onclick="deleteSinglePayrollProject('${proj.id}')">🗑</button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function renderActivePayrollProject() {
+            const proj = getActivePayrollObj();
+            if (!proj) return;
+
+            document.getElementById('activePayrollTitle').textContent = proj.title;
+            document.getElementById('payrollEmpCount').textContent = `${proj.employees.length.toLocaleString('fa-IR')} کارمند ثبت شده`;
+
+            let totalNet = 0, paidSum = 0, remSum = 0;
+            const stack = document.getElementById('employeesStack');
+            stack.innerHTML = '';
+
+            if (proj.employees.length === 0) {
+                stack.innerHTML = `<div class="empty-box">هنوز کارمندی در «${proj.title}» ثبت نشده است.</div>`;
+            } else {
+                proj.employees.forEach(emp => {
+                    const { net } = calcEmployeeNetPay(emp);
+                    totalNet += net;
+                    if (emp.paid) paidSum += net;
+                    else remSum += net;
+
+                    const card = document.createElement('div');
+                    card.className = 'emp-card' + (emp.paid ? ' paid' : '');
+                    card.innerHTML = `
+                        <div class="emp-top">
+                            <div>
+                                <div style="font-size:14px; font-weight:900; color:#fff;">
+                                    👤 ${emp.name} ${emp.role ? `<span style="font-size:11px; color:var(--gold-light);">(${emp.role})</span>` : ''}
+                                </div>
+                                <div class="emp-badges">
+                                    ${emp.nationalId ? `<span class="emp-tag">کد ملی: ${toPersianDigits(emp.nationalId)}</span>` : ''}
+                                    ${emp.birthDate ? `<span class="emp-tag">تولد: ${emp.birthDate}</span>` : ''}
+                                    ${emp.phone ? `<span class="emp-tag">📱 ${toPersianDigits(emp.phone)}</span>` : ''}
+                                </div>
+                            </div>
+                            <div class="nav-actions">
+                                <button class="icon-btn gold" onclick="openEmployeeModal('${emp.id}')" title="ویرایش کارمند">✎</button>
+                                <button class="icon-btn danger" onclick="deleteEmployee('${emp.id}')" title="حذف">✕</button>
+                            </div>
+                        </div>
+
+                        <div class="emp-financial-grid">
+                            <div>حقوق پایه: <b>${Number(emp.baseSalary).toLocaleString('fa-IR')} ت</b></div>
+                            <div>عیدی/سنوات: <b style="color:var(--accent-light);">${Number(emp.bonus).toLocaleString('fa-IR')} ت</b></div>
+                            <div>پورسانت/پاداش: <b style="color:var(--gold-light);">${Number(emp.commission).toLocaleString('fa-IR')} ت</b></div>
+                            <div>وام/مساعده: <b style="color:var(--danger-light);">${Number(emp.loanAdvance).toLocaleString('fa-IR')} ت (${emp.loanMode === 'deduct' ? 'کسر' : 'ثبتی'})</b></div>
+                        </div>
+
+                        ${emp.note ? `<div style="font-size:11px; color:var(--text-secondary); margin-bottom:8px;">📝 توضیح: ${emp.note}</div>` : ''}
+
+                        <div class="emp-bottom">
+                            <div>
+                                <span style="font-size:11px; color:var(--text-muted);">خالص قابل پرداخت (${emp.payDate || ''}):</span>
+                                <div style="font-size:16px; font-weight:900; color:var(--accent-light);">${net.toLocaleString('fa-IR')} <small style="font-size:10px;">تومان</small></div>
+                            </div>
+                            <button class="mini-btn" style="background:${emp.paid ? 'var(--accent)' : 'rgba(255,255,255,0.07)'}; color:#fff;" onclick="toggleEmployeePaid('${emp.id}')">
+                                ${emp.paid ? '✓ پرداخت شد' : 'ثبت پرداخت'}
+                            </button>
+                        </div>
+                    `;
+                    stack.appendChild(card);
+                });
+            }
+
+            document.getElementById('payrollTotalNetSum').innerHTML = `${totalNet.toLocaleString('fa-IR')} <small>تومان</small>`;
+            document.getElementById('payrollPaidSum').textContent = `${paidSum.toLocaleString('fa-IR')} ت`;
+            document.getElementById('payrollRemainingSum').textContent = `${remSum.toLocaleString('fa-IR')} ت`;
+        }
+
+        function openEmployeeModal(empId = null) {
+            const proj = getActivePayrollObj();
+            if (!proj) return;
+            editingEmpId = empId;
+
+            if (empId) {
+                const emp = proj.employees.find(e => e.id === empId);
+                if (!emp) return;
+                document.getElementById('empModalTitle').textContent = 'ویرایش پرونده کارمند';
+                document.getElementById('empName').value = emp.name;
+                document.getElementById('empRole').value = emp.role || '';
+                document.getElementById('empNationalId').value = emp.nationalId || '';
+                document.getElementById('empBirthDate').value = emp.birthDate || '';
+                document.getElementById('empPhone').value = emp.phone || '';
+                document.getElementById('empBaseSalary').value = emp.baseSalary ? Number(emp.baseSalary).toLocaleString('en-US') : '';
+                document.getElementById('empBonus').value = emp.bonus ? Number(emp.bonus).toLocaleString('en-US') : '';
+                document.getElementById('empCommission').value = emp.commission ? Number(emp.commission).toLocaleString('en-US') : '';
+                document.getElementById('empLoanAdvance').value = emp.loanAdvance ? Number(emp.loanAdvance).toLocaleString('en-US') : '';
+                document.getElementById('empLoanMode').value = emp.loanMode || 'deduct';
+                document.getElementById('empPayDate').value = emp.payDate || getTodayPersian().dateStr;
+                document.getElementById('empNote').value = emp.note || '';
+            } else {
+                document.getElementById('empModalTitle').textContent = '👔 افزودن کارمند جدید به پروژه';
+                document.getElementById('empName').value = '';
+                document.getElementById('empRole').value = '';
+                document.getElementById('empNationalId').value = '';
+                document.getElementById('empBirthDate').value = '';
+                document.getElementById('empPhone').value = '';
+                document.getElementById('empBaseSalary').value = '';
+                document.getElementById('empBonus').value = '';
+                document.getElementById('empCommission').value = '';
+                document.getElementById('empLoanAdvance').value = '';
+                document.getElementById('empLoanMode').value = 'deduct';
+                document.getElementById('empPayDate').value = getTodayPersian().dateStr;
+                document.getElementById('empNote').value = '';
+            }
+
+            document.getElementById('employeeModal').classList.add('active');
+        }
+
+        function closeEmployeeModal() {
+            editingEmpId = null;
+            document.getElementById('employeeModal').classList.remove('active');
+        }
+
+        function saveEmployeeRecord() {
+            const proj = getActivePayrollObj();
+            if (!proj) return;
+
+            const name = document.getElementById('empName').value.trim();
+            if (!name) return alert('نام و نام خانوادگی کارمند را وارد کنید.');
+
+            const empData = {
+                id: editingEmpId || ('emp_' + Date.now()),
+                name,
+                role: document.getElementById('empRole').value.trim(),
+                nationalId: toEnglishDigits(document.getElementById('empNationalId').value.trim()),
+                birthDate: document.getElementById('empBirthDate').value.trim(),
+                phone: toEnglishDigits(document.getElementById('empPhone').value.trim()),
+                baseSalary: parseCleanNumber(document.getElementById('empBaseSalary').value),
+                bonus: parseCleanNumber(document.getElementById('empBonus').value),
+                commission: parseCleanNumber(document.getElementById('empCommission').value),
+                loanAdvance: parseCleanNumber(document.getElementById('empLoanAdvance').value),
+                loanMode: document.getElementById('empLoanMode').value,
+                payDate: document.getElementById('empPayDate').value.trim() || getTodayPersian().dateStr,
+                note: document.getElementById('empNote').value.trim(),
+                paid: false
+            };
+
+            if (editingEmpId) {
+                const idx = proj.employees.findIndex(e => e.id === editingEmpId);
+                if (idx > -1) {
+                    empData.paid = proj.employees[idx].paid;
+                    proj.employees[idx] = empData;
+                }
+            } else {
+                proj.employees.unshift(empData);
+            }
+
+            saveDatabase();
+            closeEmployeeModal();
+            renderActivePayrollProject();
+        }
+
+        function toggleEmployeePaid(empId) {
+            const proj = getActivePayrollObj();
+            if (!proj) return;
+            const emp = proj.employees.find(e => e.id === empId);
+            if (!emp) return;
+            emp.paid = !emp.paid;
+            saveDatabase();
+            renderActivePayrollProject();
+        }
+
+        function deleteEmployee(empId) {
+            const proj = getActivePayrollObj();
+            if (!proj) return;
+            if (confirm('پرونده این کارمند حذف شود؟')) {
+                proj.employees = proj.employees.filter(e => e.id !== empId);
+                saveDatabase();
+                renderActivePayrollProject();
+            }
+        }
+
+        function renameActivePayrollProject() {
+            const proj = getActivePayrollObj();
+            if (!proj) return;
+            const newTitle = prompt('عنوان جدید پروژه / لیست حقوق:', proj.title);
+            if (newTitle && newTitle.trim()) {
+                proj.title = newTitle.trim();
+                saveDatabase();
+                renderActivePayrollProject();
+            }
+        }
+
+        function deleteActivePayrollProject() {
+            if (confirm('کل این پروژه حقوق و لیست کارمندان داخل آن حذف شود؟')) {
+                state.payrollProjects = state.payrollProjects.filter(p => p.id !== state.activePayrollId);
+                state.activePayrollId = null;
+                saveDatabase();
+                showPayrollProjectsView();
+            }
+        }
+
+        function deleteSinglePayrollProject(id) {
+            if (confirm('این پروژه حقوق حذف شود؟')) {
+                state.payrollProjects = state.payrollProjects.filter(p => p.id !== id);
+                saveDatabase();
+                renderPayrollProjectsList();
+            }
+        }
+
+        /* =====================================================================
+           ۵. ورود با گوگل و پشتیبان‌گیری
+           ===================================================================== */
+        function applyUserProfileUI() {
+            const prof = state.userProfile;
+            document.getElementById('displayUserName').textContent = prof.name || 'کاربر مهمان';
+            document.getElementById('manualUserNameInput').value = prof.name || '';
+
+            const avatarContainer = document.getElementById('userAvatarContainer');
+            if (prof.picture && prof.isGoogle) {
+                avatarContainer.innerHTML = `<img src="${prof.picture}" alt="Avatar">`;
+                document.getElementById('userEmailSub').textContent = prof.email || 'متصل به حساب گوگل';
+                document.getElementById('googleUserInfo').style.display = 'block';
+            } else {
+                avatarContainer.innerHTML = `<span>${(prof.name || 'ک').charAt(0)}</span>`;
+                document.getElementById('userEmailSub').textContent = 'حالت آفلاین (برای تنظیم لمس کنید)';
+                document.getElementById('googleUserInfo').style.display = 'none';
+            }
+        }
+
+        function handleGoogleCredentialResponse(response) {
+            try {
+                const base64Url = response.credential.split('.')[1];
+                const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+                const jsonPayload = decodeURIComponent(atob(base64).split('').map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join(''));
+                const data = JSON.parse(jsonPayload);
+                state.userProfile.name = data.name || 'کاربر گوگل';
+                state.userProfile.email = data.email || '';
+                state.userProfile.picture = data.picture || '';
+                state.userProfile.isGoogle = true;
+                saveDatabase();
+                applyUserProfileUI();
+                closeAccountModal();
+            } catch (err) {
+                alert('خطا در اتصال گوگل.');
+            }
+        }
+
+        function initGoogleAuth() {
+            if (window.google && window.google.accounts) {
+                try {
+                    google.accounts.id.initialize({
+                        client_id: "542718167664-968940843603.apps.googleusercontent.com",
+                        callback: handleGoogleCredentialResponse
+                    });
+                    google.accounts.id.renderButton(
+                        document.getElementById("googleBtnContainer"),
+                        { theme: "filled_blue", size: "large", text: "signin_with", shape: "pill", locale: "fa" }
+                    );
+                } catch (e) {}
+            }
+        }
+
+        function signOutGoogle() {
+            state.userProfile = { name: 'کاربر مهمان', email: '', picture: '', isGoogle: false };
+            saveDatabase();
+            applyUserProfileUI();
+        }
+
+        function openAccountModal() {
+            document.getElementById('accountModal').classList.add('active');
+            setTimeout(initGoogleAuth, 100);
+        }
+
+        function closeAccountModal() {
+            document.getElementById('accountModal').classList.remove('active');
+        }
+
+        function saveManualAccountName() {
+            const name = document.getElementById('manualUserNameInput').value.trim();
+            if (name) {
+                state.userProfile.name = name;
+                state.userProfile.isGoogle = false;
+                state.userProfile.picture = '';
+                saveDatabase();
+                applyUserProfileUI();
+                closeAccountModal();
+            }
+        }
+
+        function exportFullBackup() {
+            const dataStr = JSON.stringify(state, null, 2);
+            const blob = new Blob([dataStr], { type: 'application/json' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = `TarazPro_Backup_${Date.now()}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+
+        function importFullBackup(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    const imported = JSON.parse(e.target.result);
+                    if (imported && Array.isArray(imported.calculations)) {
+                        state = Object.assign(state, imported);
+                        saveDatabase();
+                        applyUserProfileUI();
+                        closeAccountModal();
+                        alert('فایل پشتیبان با موفقیت بازگردانی شد!');
+                    }
+                } catch (err) {
+                    alert('خطا در خواندن فایل پشتیبان.');
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        /* =====================================================================
+           ۶. ماشین‌حساب شناور (ساده + پیشرفته + تاریخچه)
+           ===================================================================== */
+        let calcCurrentExpr = '';
+        let calcJustEvaluated = false;
+
+        function openFloatingCalc() {
+            document.getElementById('floatingCalcModal').classList.add('active');
+            renderCalcHistoryList();
+        }
+
+        function closeFloatingCalc() {
+            document.getElementById('floatingCalcModal').classList.remove('active');
+        }
+
+        function setCalcMode(mode) {
+            const grid = document.getElementById('calcGridContainer');
+            document.getElementById('btnModeBasic').classList.toggle('active', mode === 'basic');
+            document.getElementById('btnModeSci').classList.toggle('active', mode === 'sci');
+            grid.classList.toggle('scientific-mode', mode === 'sci');
+        }
+
+        function toggleCalcHistory() {
+            document.getElementById('calcHistoryDrawer').classList.toggle('active');
+            renderCalcHistoryList();
+        }
+
+        function renderCalcHistoryList() {
+            const list = document.getElementById('calcHistoryList');
+            list.innerHTML = '';
+            if (!state.calcHistory || state.calcHistory.length === 0) {
+                list.innerHTML = `<div style="color:var(--text-muted); font-size:11px; text-align:center; padding:6px;">تاریخچه خالی است.</div>`;
+                return;
+            }
+            state.calcHistory.slice(0, 15).forEach(item => {
+                const row = document.createElement('div');
+                row.className = 'history-item-row';
+                row.innerHTML = `<span>${item.expr} =</span><b>${Number(item.result).toLocaleString('en-US')}</b>`;
+                row.onclick = () => {
+                    calcCurrentExpr = item.result.toString();
+                    updateCalcDisplay();
+                    document.getElementById('calcHistoryDrawer').classList.remove('active');
+                };
+                list.appendChild(row);
+            });
+        }
+
+        function clearCalcHistory() {
+            state.calcHistory = [];
+            saveDatabase();
+            renderCalcHistoryList();
+        }
+
+        function updateCalcDisplay() {
+            document.getElementById('calcExprView').textContent = calcCurrentExpr;
+            document.getElementById('calcResultView').textContent = calcCurrentExpr ? calcCurrentExpr : '0';
+        }
+
+        function calcInputDigit(d) {
+            if (calcJustEvaluated) { calcCurrentExpr = ''; calcJustEvaluated = false; }
+            calcCurrentExpr += d;
+            updateCalcDisplay();
+        }
+
+        function calcInputDot(dot) {
+            if (calcJustEvaluated) { calcCurrentExpr = '0'; calcJustEvaluated = false; }
+            calcCurrentExpr += dot;
+            updateCalcDisplay();
+        }
+
+        function calcInputOp(op) {
+            calcJustEvaluated = false;
+            if (!calcCurrentExpr) calcCurrentExpr = '0';
+            calcCurrentExpr += op;
+            updateCalcDisplay();
+        }
+
+        function calcInputSymbol(sym) {
+            if (calcJustEvaluated) { calcCurrentExpr = ''; calcJustEvaluated = false; }
+            calcCurrentExpr += sym;
+            updateCalcDisplay();
+        }
+
+        function calcInputScientific(fnStr) {
+            if (calcJustEvaluated) { calcCurrentExpr = ''; calcJustEvaluated = false; }
+            calcCurrentExpr += fnStr;
+            updateCalcDisplay();
+        }
+
+        function calcDeleteLast() {
+            calcCurrentExpr = calcCurrentExpr.slice(0, -1);
+            updateCalcDisplay();
+        }
+
+        function calcClearAll() {
+            calcCurrentExpr = '';
+            calcJustEvaluated = false;
+            updateCalcDisplay();
+        }
+
+        function calcExecuteEqual() {
+            if (!calcCurrentExpr) return;
+            try {
+                let sanitized = calcCurrentExpr.replace(/\^/g, '**').replace(/%/g, '/100');
+                const evalFn = new Function('return ' + sanitized);
+                const rawResult = evalFn();
+                const cleanResult = Math.round(rawResult * 100000) / 100000;
+
+                state.calcHistory.unshift({ expr: calcCurrentExpr, result: cleanResult });
+                if (state.calcHistory.length > 30) state.calcHistory.pop();
+                saveDatabase();
+
+                document.getElementById('calcExprView').textContent = calcCurrentExpr + ' =';
+                document.getElementById('calcResultView').textContent = cleanResult.toLocaleString('en-US');
+                calcCurrentExpr = cleanResult.toString();
+                calcJustEvaluated = true;
+            } catch (err) {
+                document.getElementById('calcResultView').textContent = 'خطا';
+                calcJustEvaluated = true;
+            }
+        }
+
+        /* =====================================================================
+           ۷. توابع کمکی اعداد و تاریخ شمسی
+           ===================================================================== */
+        function toEnglishDigits(str) {
+            if (!str) return '';
+            return str.toString()
+                .replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d))
+                .replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d));
+        }
+
+        function toPersianDigits(str) {
+            if (str === null || str === undefined) return '';
+            return str.toString().replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
+        }
+
+        function parseCleanNumber(val) {
+            const raw = toEnglishDigits(val).replace(/[^0-9]/g, '');
+            return Number(raw) || 0;
+        }
+
+        function formatNumberInput(input) {
+            let raw = toEnglishDigits(input.value).replace(/[^0-9]/g, '');
+            input.value = raw ? Number(raw).toLocaleString('en-US') : '';
+        }
+
+        function getTodayPersian() {
+            try {
+                const now = new Date();
+                const dateStr = new Intl.DateTimeFormat('fa-IR-u-ca-persian', {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit'
+                }).format(now);
+                const weekday = new Intl.DateTimeFormat('fa-IR', { weekday: 'long' }).format(now);
+                return { dateStr, weekday };
+            } catch (e) {
+                return { dateStr: '۱۴۰۵/۰۸/۲۳', weekday: 'شنبه' };
+            }
+        }
+
+        function addMonthsToPersianDate(baseDateStr, addMonths) {
+            const clean = toEnglishDigits(baseDateStr).replace(/[^0-9/]/g, '');
+            const parts = clean.split('/');
+            if (parts.length !== 3) return baseDateStr;
+            let y = parseInt(parts[0], 10);
+            let m = parseInt(parts[1], 10);
+            let d = parseInt(parts[2], 10);
+            if (isNaN(y) || isNaN(m) || isNaN(d)) return baseDateStr;
+
+            let totalMonths = (m - 1) + addMonths;
+            y += Math.floor(totalMonths / 12);
+            m = (totalMonths % 12) + 1;
+            if (m > 6 && d === 31) d = 30;
+            if (m === 12 && d > 29) d = 29;
+
+            return `${toPersianDigits(y)}/${toPersianDigits(String(m).padStart(2, '0'))}/${toPersianDigits(String(d).padStart(2, '0'))}`;
+        }
+
+        function fillDefaultDateInputs() {
+            const { dateStr, weekday } = getTodayPersian();
+            document.getElementById('inDate').value = dateStr;
+            document.getElementById('chkDate').value = dateStr;
+            document.getElementById('txDateInput').value = dateStr;
+            document.getElementById('personDateInput').value = dateStr;
+            const daySelect = document.getElementById('inDay');
+            for (let i = 0; i < daySelect.options.length; i++) {
+                if (daySelect.options[i].value === weekday) {
+                    daySelect.selectedIndex = i;
+                    break;
+                }
+            }
+        }
+
+        /* =====================================================================
+           ۸. ناوبری صفحات
+           ===================================================================== */
+        function switchView(viewId) {
+            document.querySelectorAll('.view-section').forEach(sec => sec.classList.remove('active'));
+            document.getElementById(viewId).classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            if (viewId !== 'viewHome') {
+                history.pushState({ view: viewId }, '');
+            }
+        }
+
+        window.addEventListener('popstate', () => {
+            const activeSec = document.querySelector('.view-section.active');
+            if (activeSec && activeSec.id !== 'viewHome') {
+                showHomeView();
+            }
+        });
+
+        function showHomeView() {
+            updateHomeBadges();
+            document.querySelectorAll('.view-section').forEach(sec => sec.classList.remove('active'));
+            document.getElementById('viewHome').classList.add('active');
+        }
+
+        function showSavedCalcsView() {
+            document.getElementById('searchCalcInput').value = '';
+            renderSavedList();
+            switchView('viewList');
+        }
+
+        function showSavedLoansView() {
+            document.getElementById('searchLoanInput').value = '';
+            renderSavedLoansList();
+            switchView('viewLoanList');
+        }
+
+        function showBankAccountsView() {
+            fillDefaultDateInputs();
+            renderBankAccountsView();
+            switchView('viewBankAccounts');
+        }
+
+        function showPeopleLedgerView() {
+            fillDefaultDateInputs();
+            renderPeopleLedger();
+            switchView('viewPeopleLedger');
+        }
+
+        function showProjectEstimatorView() {
+            liveCalcEstimate();
+            renderSavedEstimates();
+            switchView('viewProjectEstimator');
+        }
+
+        function showChequesView() {
+            fillDefaultDateInputs();
+            renderChequesView();
+            switchView('viewCheques');
+        }
+
+        /* =====================================================================
+           ۹. مدیریت وام‌ها همراه با درصد سود وام
+           ===================================================================== */
+        function previewLoanCalculation() {
+            const principal = parseCleanNumber(document.getElementById('loanPrincipalInput').value);
+            const rate = parseFloat(document.getElementById('loanInterestInput').value) || 0;
+            const months = Math.max(1, parseInt(document.getElementById('loanMonthsInput').value, 10) || 1);
+
+            const interestAmount = Math.round(principal * (rate / 100));
+            const totalWithInterest = principal + interestAmount;
+            const monthly = Math.round(totalWithInterest / months);
+
+            document.getElementById('loanPreviewTotal').textContent = `${totalWithInterest.toLocaleString('fa-IR')} تومان (سود: ${interestAmount.toLocaleString('fa-IR')})`;
+            document.getElementById('loanPreviewMonthly').textContent = `${monthly.toLocaleString('fa-IR')} تومان`;
+        }
+
+        function openNewLoanModal() {
+            loanModalMode = 'create';
+            document.getElementById('loanModalTitle').textContent = '🏦 ثبت وام جدید (+محاسبه سود)';
+            document.getElementById('loanBankInput').value = '';
+            document.getElementById('loanPrincipalInput').value = '';
+            document.getElementById('loanInterestInput').value = '23';
+            document.getElementById('loanMonthsInput').value = '12';
+            document.getElementById('loanStartDateInput').value = getTodayPersian().dateStr;
+            previewLoanCalculation();
+            document.getElementById('loanModal').classList.add('active');
+        }
+
+        function openEditLoanModal() {
+            const loan = getActiveLoanObj();
+            if (!loan) return;
+            loanModalMode = 'edit';
+            document.getElementById('loanModalTitle').textContent = 'ویرایش مشخصات و سود وام';
+            document.getElementById('loanBankInput').value = loan.bankName;
+            document.getElementById('loanPrincipalInput').value = Number(loan.principalAmount || loan.totalAmount).toLocaleString('en-US');
+            document.getElementById('loanInterestInput').value = loan.interestRate !== undefined ? loan.interestRate : 0;
+            document.getElementById('loanMonthsInput').value = loan.monthsCount;
+            document.getElementById('loanStartDateInput').value = loan.startDate;
+            previewLoanCalculation();
+            document.getElementById('loanModal').classList.add('active');
+        }
+
+        function closeLoanModal() {
+            document.getElementById('loanModal').classList.remove('active');
+        }
+
+        function confirmLoanModal() {
+            const bankName = document.getElementById('loanBankInput').value.trim();
+            const principalAmount = parseCleanNumber(document.getElementById('loanPrincipalInput').value);
+            const interestRate = parseFloat(document.getElementById('loanInterestInput').value) || 0;
+            const monthsCount = parseInt(toEnglishDigits(document.getElementById('loanMonthsInput').value), 10);
+            const startDate = document.getElementById('loanStartDateInput').value.trim() || getTodayPersian().dateStr;
+
+            if (!bankName || !principalAmount || !monthsCount || monthsCount <= 0) {
+                return alert('لطفاً نام بانک، مبلغ وام و تعداد ماه‌ها را وارد کنید.');
+            }
+
+            const totalAmount = Math.round(principalAmount * (1 + (interestRate / 100)));
+            const baseMonthly = Math.floor(totalAmount / monthsCount);
+            const remainder = totalAmount - (baseMonthly * monthsCount);
+
+            if (loanModalMode === 'create') {
+                const installments = [];
+                for (let i = 0; i < monthsCount; i++) {
+                    installments.push({
+                        id: 'inst_' + Date.now() + '_' + i,
+                        num: i + 1,
+                        title: `قسط ${toPersianDigits(i + 1)} (${bankName})`,
+                        dueDate: addMonthsToPersianDate(startDate, i),
+                        amount: i === monthsCount - 1 ? baseMonthly + remainder : baseMonthly,
+                        paid: false,
+                        alarmSet: false
+                    });
+                }
+                const newLoan = {
+                    id: 'loan_' + Date.now(),
+                    bankName,
+                    principalAmount,
+                    interestRate,
+                    totalAmount,
+                    monthsCount,
+                    startDate,
+                    installments
+                };
+                state.loans.unshift(newLoan);
+                saveDatabase();
+                closeLoanModal();
+                openLoanDetail(newLoan.id);
+            } else {
+                const loan = getActiveLoanObj();
+                if (!loan) return;
+                loan.bankName = bankName;
+                loan.principalAmount = principalAmount;
+                loan.interestRate = interestRate;
+                loan.totalAmount = totalAmount;
+                loan.startDate = startDate;
+                const newInst = [];
+                for (let i = 0; i < monthsCount; i++) {
+                    const old = loan.installments[i];
+                    newInst.push({
+                        id: old ? old.id : ('inst_' + Date.now() + '_' + i),
+                        num: i + 1,
+                        title: `قسط ${toPersianDigits(i + 1)} (${bankName})`,
+                        dueDate: addMonthsToPersianDate(startDate, i),
+                        amount: i === monthsCount - 1 ? baseMonthly + remainder : baseMonthly,
+                        paid: old ? old.paid : false,
+                        alarmSet: old ? old.alarmSet : false
+                    });
+                }
+                loan.monthsCount = monthsCount;
+                loan.installments = newInst;
+                saveDatabase();
+                closeLoanModal();
+                renderActiveLoanDetail();
+            }
+        }
+
+        function openLoanDetail(loanId) {
+            state.activeLoanId = loanId;
+            saveDatabase();
+            renderActiveLoanDetail();
+            switchView('viewLoanDetail');
+        }
+
+        function getActiveLoanObj() {
+            return state.loans.find(l => l.id === state.activeLoanId);
+        }
+
+        function getLoanRemainingStats(loan) {
+            let remCount = 0, remAmount = 0;
+            loan.installments.forEach(inst => {
+                if (!inst.paid) {
+                    remCount++;
+                    remAmount += Number(inst.amount) || 0;
+                }
+            });
+            return { remCount, remAmount };
+        }
+
+        function renderSavedLoansList() {
+            const container = document.getElementById('savedLoansContainer');
+            const q = document.getElementById('searchLoanInput').value.trim().toLowerCase();
+            container.innerHTML = '';
+
+            const filtered = state.loans.filter(l => l.bankName.toLowerCase().includes(q));
+            if (filtered.length === 0) {
+                container.innerHTML = `<div class="empty-box">هنوز وامی ثبت نشده است.</div>`;
+                return;
+            }
+
+            filtered.forEach(loan => {
+                const { remCount, remAmount } = getLoanRemainingStats(loan);
+                const card = document.createElement('div');
+                card.className = 'item-box';
+                card.style.cursor = 'pointer';
+                card.onclick = () => openLoanDetail(loan.id);
+                card.innerHTML = `
+                    <div>
+                        <div style="font-size: 14px; font-weight: 800; color: #fff;">🏦 ${loan.bankName} <span style="font-size:11px; color:var(--gold-light);">(سود: ${toPersianDigits(loan.interestRate || 0)}٪)</span></div>
+                        <div style="font-size: 11px; color: var(--text-muted); margin-top: 3px;">
+                            باقی‌مانده: <b style="color: var(--gold-light);">${remCount.toLocaleString('fa-IR')} قسط</b> • 
+                            <b style="color: var(--accent-light);">${remAmount.toLocaleString('fa-IR')} ت</b>
+                        </div>
+                    </div>
+                    <div class="nav-actions" onclick="event.stopPropagation()">
+                        <button class="icon-btn danger" onclick="deleteSingleLoan('${loan.id}')">🗑</button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function renderActiveLoanDetail() {
+            const loan = getActiveLoanObj();
+            if (!loan) return;
+
+            document.getElementById('activeLoanBankTitle').textContent = loan.bankName;
+            document.getElementById('loanPrincipalInfo').textContent = `${Number(loan.principalAmount || loan.totalAmount).toLocaleString('fa-IR')} ت`;
+            document.getElementById('loanInterestPercentInfo').textContent = `${toPersianDigits(loan.interestRate || 0)}٪`;
+            document.getElementById('loanTotalWithInterestInfo').textContent = `${Number(loan.totalAmount).toLocaleString('fa-IR')} ت`;
+
+            const { remCount, remAmount } = getLoanRemainingStats(loan);
+            document.getElementById('loanRemCount').textContent = `${remCount.toLocaleString('fa-IR')} از ${loan.installments.length.toLocaleString('fa-IR')} قسط`;
+            document.getElementById('loanRemAmount').textContent = `${remAmount.toLocaleString('fa-IR')} تومان`;
+
+            const stack = document.getElementById('installmentsStack');
+            stack.innerHTML = '';
+
+            loan.installments.forEach(inst => {
+                const row = document.createElement('div');
+                row.className = 'installment-card' + (inst.paid ? ' paid' : '');
+                row.innerHTML = `
+                    <div style="display:flex; align-items:center; gap:9px;">
+                        <button class="check-btn" onclick="toggleInstallmentPaid('${inst.id}')">${inst.paid ? '✓' : ''}</button>
+                        <div>
+                            <div style="font-size: 13px; font-weight: 800; color: #fff; ${inst.paid ? 'text-decoration: line-through;' : ''}">${inst.title}</div>
+                            <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">سررسید: <b style="color: var(--gold-light);">${inst.dueDate}</b></div>
+                        </div>
+                    </div>
+                    <div style="display:flex; align-items:center; gap:6px;">
+                        <div class="item-price">${Number(inst.amount).toLocaleString('fa-IR')} <small>ت</small></div>
+                        <button class="bell-btn ${inst.alarmSet ? 'active' : ''}" onclick="toggleInstallmentAlarm('${inst.id}')">🔔</button>
+                        <button class="icon-btn gold" onclick="openEditInstModal('${inst.id}')">✎</button>
+                        <button class="icon-btn danger" onclick="deleteSingleInstallment('${inst.id}')">✕</button>
+                    </div>
+                `;
+                stack.appendChild(row);
+            });
+        }
+
+        function toggleInstallmentPaid(instId) {
+            const loan = getActiveLoanObj();
+            if (!loan) return;
+            const inst = loan.installments.find(i => i.id === instId);
+            if (!inst) return;
+            inst.paid = !inst.paid;
+            saveDatabase();
+            renderActiveLoanDetail();
+        }
+
+        function toggleInstallmentAlarm(instId) {
+            const loan = getActiveLoanObj();
+            if (!loan) return;
+            const inst = loan.installments.find(i => i.id === instId);
+            if (!inst) return;
+            inst.alarmSet = !inst.alarmSet;
+            saveDatabase();
+            renderActiveLoanDetail();
+
+            if (inst.alarmSet) {
+                const now = new Date();
+                const y = now.getFullYear();
+                const m = String(now.getMonth() + 1).padStart(2, '0');
+                const d = String(now.getDate()).padStart(2, '0');
+                const icsContent = [
+                    "BEGIN:VCALENDAR",
+                    "VERSION:2.0",
+                    "BEGIN:VEVENT",
+                    `DTSTART:${y}${m}${d}T090000`,
+                    `DTEND:${y}${m}${d}T100000`,
+                    `SUMMARY:🔔 سررسید ${inst.title}`,
+                    `DESCRIPTION:یادآور پرداخت ${inst.title} به مبلغ ${Number(inst.amount).toLocaleString('fa-IR')} تومان`,
+                    "BEGIN:VALARM",
+                    "TRIGGER:-PT15M",
+                    "ACTION:DISPLAY",
+                    "DESCRIPTION:یادآور پرداخت قسط وام",
+                    "END:VALARM",
+                    "END:VEVENT",
+                    "END:VCALENDAR"
+                ].join("\r\n");
+
+                if (confirm(`هشدار قسط «${inst.title}» به تقویم گوشی اضافه شود؟`)) {
+                    const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+                    const a = document.createElement('a');
+                    a.href = URL.createObjectURL(blob);
+                    a.download = `loan-alarm.ics`;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                }
+            }
+        }
+
+        function openEditInstModal(instId) {
+            const loan = getActiveLoanObj();
+            if (!loan) return;
+            const inst = loan.installments.find(i => i.id === instId);
+            if (!inst) return;
+            editingInstId = instId;
+            document.getElementById('editInstTitle').value = inst.title;
+            document.getElementById('editInstDate').value = inst.dueDate;
+            document.getElementById('editInstAmount').value = Number(inst.amount).toLocaleString('en-US');
+            document.getElementById('editInstModal').classList.add('active');
+        }
+
+        function closeEditInstModal() {
+            editingInstId = null;
+            document.getElementById('editInstModal').classList.remove('active');
+        }
+
+        function saveEditedInstallment() {
+            const loan = getActiveLoanObj();
+            if (!loan || !editingInstId) return;
+            const inst = loan.installments.find(i => i.id === editingInstId);
+            if (!inst) return;
+            const amount = parseCleanNumber(document.getElementById('editInstAmount').value);
+            if (!amount) return alert('مبلغ معتبر وارد کنید.');
+            inst.title = document.getElementById('editInstTitle').value.trim();
+            inst.dueDate = document.getElementById('editInstDate').value.trim();
+            inst.amount = amount;
+            saveDatabase();
+            closeEditInstModal();
+            renderActiveLoanDetail();
+        }
+
+        function deleteSingleInstallment(instId) {
+            const loan = getActiveLoanObj();
+            if (!loan) return;
+            if (confirm('این قسط حذف شود؟')) {
+                loan.installments = loan.installments.filter(i => i.id !== instId);
+                saveDatabase();
+                renderActiveLoanDetail();
+            }
+        }
+
+        function deleteSingleLoan(loanId) {
+            if (confirm('این وام حذف شود؟')) {
+                state.loans = state.loans.filter(l => l.id !== loanId);
+                saveDatabase();
+                renderSavedLoansList();
+            }
+        }
+
+        function deleteActiveLoan() {
+            if (confirm('کل پرونده این وام حذف شود؟')) {
+                state.loans = state.loans.filter(l => l.id !== state.activeLoanId);
+                state.activeLoanId = null;
+                saveDatabase();
+                showSavedLoansView();
+            }
+        }
+
+        function deleteAllLoans() {
+            if (!state.loans.length) return;
+            if (confirm('تمام وام‌ها حذف شوند؟')) {
+                state.loans = [];
+                saveDatabase();
+                renderSavedLoansList();
+            }
+        }
+
+        /* =====================================================================
+           ۱۰. مدیریت حساب‌های بانکی، اشخاص، برآورد و چک‌ها
+           ===================================================================== */
+        function createNewBankAccount() {
+            const name = document.getElementById('newBankName').value.trim();
+            const initial = parseCleanNumber(document.getElementById('newBankInitial').value);
+            if (!name) return alert('نام حساب یا بانک را وارد کنید.');
+
+            state.bankAccounts.push({ id: 'bnk_' + Date.now(), name, balance: initial });
+            document.getElementById('newBankName').value = '';
+            document.getElementById('newBankInitial').value = '';
+            saveDatabase();
+            renderBankAccountsView();
+        }
+
+        function addBankTransaction() {
+            if (state.bankAccounts.length === 0) return alert('ابتدا یک حساب تعریف کنید.');
+            const bankId = document.getElementById('txBankSelect').value;
+            const type = document.getElementById('txTypeSelect').value;
+            const date = document.getElementById('txDateInput').value.trim() || getTodayPersian().dateStr;
+            const note = document.getElementById('txNoteInput').value.trim() || (type === 'in' ? 'واریز' : 'برداشت');
+            const amount = parseCleanNumber(document.getElementById('txAmountInput').value);
+
+            if (!amount || amount <= 0) return alert('مبلغ را وارد کنید.');
+
+            const bank = state.bankAccounts.find(b => b.id === bankId);
+            if (!bank) return;
+
+            if (type === 'in') bank.balance += amount;
+            else bank.balance -= amount;
+
+            state.bankTransactions.unshift({
+                id: 'btx_' + Date.now(),
+                bankId,
+                bankName: bank.name,
+                type,
+                note,
+                amount,
+                date
+            });
+
+            document.getElementById('txNoteInput').value = '';
+            document.getElementById('txAmountInput').value = '';
+            saveDatabase();
+            renderBankAccountsView();
+        }
+
+        function deleteBankAccount(id) {
+            if (confirm('این حساب بانکی حذف شود؟')) {
+                state.bankAccounts = state.bankAccounts.filter(b => b.id !== id);
+                saveDatabase();
+                renderBankAccountsView();
+            }
+        }
+
+        function renderBankAccountsView() {
+            const stack = document.getElementById('bankAccountsStack');
+            const select = document.getElementById('txBankSelect');
+            const txStack = document.getElementById('bankTxHistoryStack');
+            stack.innerHTML = '';
+            select.innerHTML = '';
+            txStack.innerHTML = '';
+
+            let totalAll = 0;
+            if (state.bankAccounts.length === 0) {
+                stack.innerHTML = `<div class="empty-box">هنوز حسابی تعریف نکرده‌اید.</div>`;
+            } else {
+                state.bankAccounts.forEach(b => {
+                    totalAll += Number(b.balance) || 0;
+                    const opt = document.createElement('option');
+                    opt.value = b.id;
+                    opt.textContent = `${b.name} (${Number(b.balance).toLocaleString('fa-IR')} ت)`;
+                    select.appendChild(opt);
+
+                    const card = document.createElement('div');
+                    card.className = 'item-box';
+                    card.innerHTML = `
+                        <div>
+                            <div style="font-size:14px; font-weight:800; color:#fff;">💳 ${b.name}</div>
+                            <div style="font-size:11px; color:var(--text-muted); margin-top:3px;">موجودی فعلی</div>
+                        </div>
+                        <div style="display:flex; align-items:center; gap:8px;">
+                            <div class="item-price" style="color:${b.balance >= 0 ? 'var(--accent-light)' : 'var(--danger-light)'};">
+                                ${Number(b.balance).toLocaleString('fa-IR')} <small>تومان</small>
+                            </div>
+                            <button class="icon-btn danger" onclick="deleteBankAccount('${b.id}')">🗑</button>
+                        </div>
+                    `;
+                    stack.appendChild(card);
+                });
+            }
+
+            document.getElementById('totalAllBanksBalance').innerHTML = `${totalAll.toLocaleString('fa-IR')} <small>تومان</small>`;
+
+            state.bankTransactions.slice(0, 20).forEach(tx => {
+                const isIn = tx.type === 'in';
+                const row = document.createElement('div');
+                row.className = 'item-box' + (!isIn ? ' deduction-item' : '');
+                row.innerHTML = `
+                    <div>
+                        <div style="font-size:11px; color:var(--text-muted);">${tx.bankName} • ${tx.date}</div>
+                        <div class="item-desc">${isIn ? '🟢 واریز: ' : '🔴 برداشت: '}${tx.note}</div>
+                    </div>
+                    <div class="item-price">${isIn ? '+' : '-'}${Number(tx.amount).toLocaleString('fa-IR')} <small>ت</small></div>
+                `;
+                txStack.appendChild(row);
+            });
+        }
+
+        function addPersonRecord() {
+            const name = document.getElementById('personNameInput').value.trim();
+            const type = document.getElementById('personTypeInput').value;
+            const date = document.getElementById('personDateInput').value.trim() || getTodayPersian().dateStr;
+            const note = document.getElementById('personNoteInput').value.trim() || 'حساب دفتری';
+            const amount = parseCleanNumber(document.getElementById('personAmountInput').value);
+
+            if (!name || !amount) return alert('نام شخص و مبلغ را وارد کنید.');
+
+            state.peopleLedger.unshift({ id: 'prs_' + Date.now(), name, type, note, amount, date });
+            document.getElementById('personNameInput').value = '';
+            document.getElementById('personNoteInput').value = '';
+            document.getElementById('personAmountInput').value = '';
+            saveDatabase();
+            renderPeopleLedger();
+        }
+
+        function settlePersonRecord(id) {
+            if (confirm('آیا این حساب تسویه شد؟')) {
+                state.peopleLedger = state.peopleLedger.filter(p => p.id !== id);
+                saveDatabase();
+                renderPeopleLedger();
+            }
+        }
+
+        function renderPeopleLedger() {
+            const stack = document.getElementById('peopleStack');
+            stack.innerHTML = '';
+            let receivable = 0, payable = 0;
+
+            if (state.peopleLedger.length === 0) {
+                stack.innerHTML = `<div class="empty-box">لیست بدهکاران و بستانکاران خالی است.</div>`;
+            } else {
+                state.peopleLedger.forEach(p => {
+                    const isDebtor = p.type === 'debtor';
+                    if (isDebtor) receivable += p.amount;
+                    else payable += p.amount;
+
+                    const card = document.createElement('div');
+                    card.className = 'item-box' + (!isDebtor ? ' deduction-item' : '');
+                    card.innerHTML = `
+                        <div>
+                            <div style="font-size:13.5px; font-weight:800; color:#fff;">${isDebtor ? '🟢 بدهکار به من: ' : '🔴 طلبکار از من: '}${p.name}</div>
+                            <div style="font-size:11.5px; color:var(--text-muted); margin-top:3px;">${p.note} • ${p.date}</div>
+                        </div>
+                        <div style="display:flex; align-items:center; gap:8px;">
+                            <div class="item-price">${Number(p.amount).toLocaleString('fa-IR')} <small>ت</small></div>
+                            <button class="mini-btn" style="background:var(--accent-soft); color:var(--accent-light);" onclick="settlePersonRecord('${p.id}')">✓ تسویه</button>
+                        </div>
+                    `;
+                    stack.appendChild(card);
+                });
+            }
+
+            document.getElementById('totalReceivableVal').textContent = `${receivable.toLocaleString('fa-IR')} ت`;
+            document.getElementById('totalPayableVal').textContent = `${payable.toLocaleString('fa-IR')} ت`;
+        }
+
+        function computeProjectQuote() {
+            const mat = parseCleanNumber(document.getElementById('estMaterial').value);
+            const lab = parseCleanNumber(document.getElementById('estLabor').value);
+            const oth = parseCleanNumber(document.getElementById('estOther').value);
+            const months = Math.max(0, parseFloat(document.getElementById('estMonths').value) || 0);
+            const inflationRate = Math.max(0, parseFloat(document.getElementById('estInflation').value) || 0);
+            const profitRate = Math.max(0, parseFloat(document.getElementById('estProfit').value) || 0);
+            const vatRate = Math.max(0, parseFloat(document.getElementById('estVat').value) || 0);
+            const withholdingRate = Math.max(0, parseFloat(document.getElementById('estWithholding').value) || 0);
+
+            const baseCost = mat + lab + oth;
+            const inflationBuffer = Math.round(baseCost * ((inflationRate / 100) * months));
+            const adjustedCost = baseCost + inflationBuffer;
+            const profitAmt = Math.round(adjustedCost * (profitRate / 100));
+            const subtotalWithProfit = adjustedCost + profitAmt;
+            const safeWithholding = Math.min(withholdingRate, 90);
+            const grossBeforeVat = safeWithholding > 0 ? Math.round(subtotalWithProfit / (1 - (safeWithholding / 100))) : subtotalWithProfit;
+            const withholdingAmt = grossBeforeVat - subtotalWithProfit;
+            const vatAmt = Math.round(grossBeforeVat * (vatRate / 100));
+            const finalPrice = grossBeforeVat + vatAmt;
+
+            return { baseCost, inflationBuffer, profitAmt, withholdingAmt, vatAmt, finalPrice };
+        }
+
+        function liveCalcEstimate() {
+            const q = computeProjectQuote();
+            document.getElementById('resBaseCost').textContent = `${q.baseCost.toLocaleString('fa-IR')} تومان`;
+            document.getElementById('resInflationAmt').textContent = `+ ${q.inflationBuffer.toLocaleString('fa-IR')} تومان`;
+            document.getElementById('resProfitAmt').textContent = `+ ${q.profitAmt.toLocaleString('fa-IR')} تومان`;
+            document.getElementById('resWithholdingAmt').textContent = `+ ${q.withholdingAmt.toLocaleString('fa-IR')} تومان`;
+            document.getElementById('resVatAmt').textContent = `+ ${q.vatAmt.toLocaleString('fa-IR')} تومان`;
+            document.getElementById('resFinalClientPrice').textContent = `${q.finalPrice.toLocaleString('fa-IR')} تومان`;
+        }
+
+        function saveEstimateRecord() {
+            const title = document.getElementById('estTitle').value.trim() || 'پروژه بدون نام';
+            const q = computeProjectQuote();
+            if (q.baseCost <= 0) return alert('هزینه متریال یا دستمزد را وارد کنید.');
+
+            state.projectEstimates.unshift({ id: 'est_' + Date.now(), title, date: getTodayPersian().dateStr, baseCost: q.baseCost, finalPrice: q.finalPrice });
+            document.getElementById('estTitle').value = '';
+            saveDatabase();
+            renderSavedEstimates();
+        }
+
+        function copyEstimateSummary() {
+            const title = document.getElementById('estTitle').value.trim() || 'پیشنهاد قیمت';
+            const q = computeProjectQuote();
+            const text = [
+                `📐 برآورد قیمت: ${title}`,
+                `• هزینه پایه: ${q.baseCost.toLocaleString('fa-IR')} تومان`,
+                `• ضریب تعدیل تورم: ${q.inflationBuffer.toLocaleString('fa-IR')} تومان`,
+                `• سود پیمانکاری: ${q.profitAmt.toLocaleString('fa-IR')} تومان`,
+                `• مالیات تکلیفی و کسورات: ${q.withholdingAmt.toLocaleString('fa-IR')} تومان`,
+                `• مالیات ارزش افزوده: ${q.vatAmt.toLocaleString('fa-IR')} تومان`,
+                `-------------------------`,
+                `🎯 مبلغ نهایی کارفرما: ${q.finalPrice.toLocaleString('fa-IR')} تومان`
+            ].join('\n');
+
+            navigator.clipboard.writeText(text).then(() => alert('متن پیش‌فاکتور کپی شد!'));
+        }
+
+        function deleteEstimateRecord(id) {
+            state.projectEstimates = state.projectEstimates.filter(e => e.id !== id);
+            saveDatabase();
+            renderSavedEstimates();
+        }
+
+        function renderSavedEstimates() {
+            const stack = document.getElementById('savedEstimatesStack');
+            stack.innerHTML = '';
+            if (state.projectEstimates.length === 0) {
+                stack.innerHTML = `<div class="empty-box">هنوز برآوردی ذخیره نشده است.</div>`;
+                return;
+            }
+            state.projectEstimates.forEach(e => {
+                const card = document.createElement('div');
+                card.className = 'item-box';
+                card.innerHTML = `
+                    <div>
+                        <div style="font-size:13.5px; font-weight:800; color:#fff;">📐 ${e.title}</div>
+                        <div style="font-size:11px; color:var(--text-muted); margin-top:3px;">پایه: ${Number(e.baseCost).toLocaleString('fa-IR')} ت • ${e.date}</div>
+                    </div>
+                    <div style="display:flex; align-items:center; gap:8px;">
+                        <div class="item-price" style="color:var(--gold-light);">${Number(e.finalPrice).toLocaleString('fa-IR')} <small>ت</small></div>
+                        <button class="icon-btn danger" onclick="deleteEstimateRecord('${e.id}')">🗑</button>
+                    </div>
+                `;
+                stack.appendChild(card);
+            });
+        }
+
+        function addNewCheque() {
+            const type = document.getElementById('chkType').value;
+            const party = document.getElementById('chkParty').value.trim();
+            const dueDate = document.getElementById('chkDate').value.trim() || getTodayPersian().dateStr;
+            const amount = parseCleanNumber(document.getElementById('chkAmount').value);
+
+            if (!party || !amount) return alert('مشخصات و مبلغ چک را وارد کنید.');
+
+            state.cheques.unshift({ id: 'chk_' + Date.now(), type, party, dueDate, amount, passed: false });
+            document.getElementById('chkParty').value = '';
+            document.getElementById('chkAmount').value = '';
+            saveDatabase();
+            renderChequesView();
+        }
+
+        function toggleChequePassed(id) {
+            const chk = state.cheques.find(c => c.id === id);
+            if (!chk) return;
+            chk.passed = !chk.passed;
+            saveDatabase();
+            renderChequesView();
+        }
+
+        function triggerChequeCalendarAlarm(id) {
+            const chk = state.cheques.find(c => c.id === id);
+            if (!chk) return;
+            const now = new Date();
+            const y = now.getFullYear();
+            const m = String(now.getMonth() + 1).padStart(2, '0');
+            const d = String(now.getDate()).padStart(2, '0');
+
+            const icsContent = [
+                "BEGIN:VCALENDAR",
+                "VERSION:2.0",
+                "BEGIN:VEVENT",
+                `DTSTART:${y}${m}${d}T090000`,
+                `DTEND:${y}${m}${d}T100000`,
+                `SUMMARY:🔔 سررسید چک: ${chk.party}`,
+                `DESCRIPTION:سررسید چک به مبلغ ${Number(chk.amount).toLocaleString('fa-IR')} تومان در تاریخ ${chk.dueDate}`,
+                "BEGIN:VALARM",
+                "TRIGGER:-PT30M",
+                "ACTION:DISPLAY",
+                "DESCRIPTION:یادآور سررسید چک",
+                "END:VALARM",
+                "END:VEVENT",
+                "END:VCALENDAR"
+            ].join("\r\n");
+
+            if (confirm(`هشدار چک «${chk.party}» به تقویم گوشی اضافه شود؟`)) {
+                const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+                const a = document.createElement('a');
+                a.href = URL.createObjectURL(blob);
+                a.download = `cheque-alarm.ics`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            }
+        }
+
+        function deleteChequeItem(id) {
+            if (confirm('این چک حذف شود؟')) {
+                state.cheques = state.cheques.filter(c => c.id !== id);
+                saveDatabase();
+                renderChequesView();
+            }
+        }
+
+        function renderChequesView() {
+            const stack = document.getElementById('chequesStack');
+            stack.innerHTML = '';
+            let inSum = 0, outSum = 0;
+
+            if (state.cheques.length === 0) {
+                stack.innerHTML = `<div class="empty-box">هنوز چکی ثبت نشده است.</div>`;
+            } else {
+                state.cheques.forEach(c => {
+                    if (!c.passed) {
+                        if (c.type === 'in') inSum += c.amount;
+                        else outSum += c.amount;
+                    }
+                    const isIn = c.type === 'in';
+                    const card = document.createElement('div');
+                    card.className = 'installment-card' + (c.passed ? ' paid' : '');
+                    card.style.borderRightColor = isIn ? 'var(--accent)' : 'var(--danger)';
+
+                    card.innerHTML = `
+                        <div style="display:flex; align-items:center; gap:9px;">
+                            <button class="check-btn" onclick="toggleChequePassed('${c.id}')">${c.passed ? '✓' : ''}</button>
+                            <div>
+                                <div style="font-size:13px; font-weight:800; color:#fff; ${c.passed ? 'text-decoration:line-through;' : ''}">
+                                    ${isIn ? '🟢 چک ورودی: ' : '🔴 چک خروجی: '}${c.party}
+                                </div>
+                                <div style="font-size:11px; color:var(--text-muted); margin-top:2px;">
+                                    سررسید: <b style="color:var(--gold-light);">${c.dueDate}</b>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="display:flex; align-items:center; gap:6px;">
+                            <div class="item-price" style="color:${isIn ? 'var(--accent-light)' : 'var(--danger-light)'};">
+                                ${Number(c.amount).toLocaleString('fa-IR')} <small>ت</small>
+                            </div>
+                            <button class="bell-btn active" onclick="triggerChequeCalendarAlarm('${c.id}')">🔔</button>
+                            <button class="icon-btn danger" onclick="deleteChequeItem('${c.id}')">✕</button>
+                        </div>
+                    `;
+                    stack.appendChild(card);
+                });
+            }
+
+            document.getElementById('totalInChequesVal').textContent = `${inSum.toLocaleString('fa-IR')} ت`;
+            document.getElementById('totalOutChequesVal').textContent = `${outSum.toLocaleString('fa-IR')} ت`;
+        }
+
+        /* =====================================================================
+           ۱۱. مدیریت دفتر محاسبات
+           ===================================================================== */
+        function openNewCalcModal() {
+            calcModalMode = 'create';
+            document.getElementById('calcModalTitle').textContent = 'ایجاد محاسبه جدید';
+            document.getElementById('calcNameInput').value = '';
+            document.getElementById('calcNameModal').classList.add('active');
+            setTimeout(() => document.getElementById('calcNameInput').focus(), 100);
+        }
+
+        function openRenameCalcModal(targetId = null) {
+            calcModalMode = 'rename';
+            renamingCalcId = targetId || state.activeCalcId;
+            const target = state.calculations.find(c => c.id === renamingCalcId);
+            if (!target) return;
+            document.getElementById('calcModalTitle').textContent = 'ویرایش نام محاسبه';
+            document.getElementById('calcNameInput').value = target.name;
+            document.getElementById('calcNameModal').classList.add('active');
+        }
+
+        function closeCalcNameModal() {
+            document.getElementById('calcNameModal').classList.remove('active');
+        }
+
+        function confirmCalcNameModal() {
+            const name = document.getElementById('calcNameInput').value.trim();
+            if (!name) return alert('نام محاسبه را وارد کنید.');
+
+            if (calcModalMode === 'create') {
+                const newCalc = { id: 'calc_' + Date.now(), name, entries: [] };
+                state.calculations.unshift(newCalc);
+                saveDatabase();
+                closeCalcNameModal();
+                openCalculation(newCalc.id);
+            } else {
+                const target = state.calculations.find(c => c.id === renamingCalcId);
+                if (target) {
+                    target.name = name;
+                    saveDatabase();
+                    renderActiveCalculation();
+                    renderSavedList();
+                }
+                closeCalcNameModal();
+            }
+        }
+
+        function openCalculation(calcId) {
+            state.activeCalcId = calcId;
+            saveDatabase();
+            fillDefaultDateInputs();
+            renderActiveCalculation();
+            switchView('viewCalc');
+        }
+
+        function getActiveCalcObj() {
+            return state.calculations.find(c => c.id === state.activeCalcId);
+        }
+
+        function calcNetTotal(entries) {
+            let addSum = 0, deductSum = 0;
+            entries.forEach(item => {
+                const val = Number(item.amount) || 0;
+                if (item.type === 'deduct') deductSum += val;
+                else addSum += val;
+            });
+            return { addSum, deductSum, net: addSum - deductSum };
+        }
+
+        function renderSavedList() {
+            const container = document.getElementById('savedCalcsContainer');
+            const q = document.getElementById('searchCalcInput').value.trim().toLowerCase();
+            container.innerHTML = '';
+
+            const filtered = state.calculations.filter(c => c.name.toLowerCase().includes(q));
+            if (filtered.length === 0) {
+                container.innerHTML = `<div class="empty-box">هیچ محاسبه‌ای یافت نشد.</div>`;
+                return;
+            }
+
+            filtered.forEach(calc => {
+                const { net } = calcNetTotal(calc.entries);
+                const card = document.createElement('div');
+                card.className = 'item-box';
+                card.style.cursor = 'pointer';
+                card.onclick = () => openCalculation(calc.id);
+                card.innerHTML = `
+                    <div>
+                        <div style="font-size: 14px; font-weight: 800; color: #fff;">📁 ${calc.name}</div>
+                        <div style="font-size: 11.5px; color: var(--text-muted); margin-top: 3px;">
+                            ${calc.entries.length.toLocaleString('fa-IR')} ردیف • مانده: 
+                            <b style="color: var(--accent-light);">${net.toLocaleString('fa-IR')} ت</b>
+                        </div>
+                    </div>
+                    <div class="nav-actions" onclick="event.stopPropagation()">
+                        <button class="icon-btn gold" onclick="openRenameCalcModal('${calc.id}')">✎</button>
+                        <button class="icon-btn danger" onclick="deleteSingleCalculation('${calc.id}')">🗑</button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function renderActiveCalculation() {
+            const calc = getActiveCalcObj();
+            if (!calc) return;
+
+            document.getElementById('activeCalcNameTitle').textContent = calc.name;
+            const { addSum, deductSum, net } = calcNetTotal(calc.entries);
+
+            document.getElementById('activeCalcCount').textContent = `${calc.entries.length.toLocaleString('fa-IR')} ردیف ثبت شده`;
+            document.getElementById('activeCalcSum').innerHTML = `${net.toLocaleString('fa-IR')} <small>تومان</small>`;
+            document.getElementById('grossAddSum').textContent = `${addSum.toLocaleString('fa-IR')} ت`;
+            document.getElementById('grossDeductSum').textContent = `${deductSum.toLocaleString('fa-IR')} ت`;
+
+            const stack = document.getElementById('entriesStack');
+            stack.innerHTML = '';
+
+            if (calc.entries.length === 0) {
+                stack.innerHTML = `<div class="empty-box">هنوز مبلغی در این محاسبه ثبت نشده است.</div>`;
+                return;
+            }
+
+            calc.entries.forEach(item => {
+                const isDeduct = item.type === 'deduct';
+                const box = document.createElement('div');
+                box.className = 'item-box' + (isDeduct ? ' deduction-item' : '');
+
+                const historyHtml = item.subtractedTotal 
+                    ? `<div class="item-sub-history">اولیه: ${Number(item.originalAmount).toLocaleString('fa-IR')} | کسر شده: ${Number(item.subtractedTotal).toLocaleString('fa-IR')}-</div>`
+                    : '';
+
+                box.innerHTML = `
+                    <div>
+                        <div style="display:flex; gap:6px; align-items:center; font-size:11px; color:var(--text-muted);">
+                            <span class="day-pill">${item.day}</span>
+                            <span>${item.date}</span>
+                        </div>
+                        <div class="item-desc">${isDeduct ? '➖ کسر کل: ' : ''}${item.note || 'بدون توضیح'}</div>
+                        ${historyHtml}
+                    </div>
+                    <div style="display:flex; align-items:center; gap:6px;">
+                        <div class="item-price">
+                            ${isDeduct ? '-' : ''}${Number(item.amount).toLocaleString('fa-IR')} <small>ت</small>
+                        </div>
+                        <div class="nav-actions">
+                            ${!isDeduct ? `<button class="icon-btn minus" onclick="openSubtractItemModal('${item.id}')">➖</button>` : ''}
+                            <button class="icon-btn gold" onclick="openEditEntryModal('${item.id}')">✎</button>
+                            <button class="icon-btn danger" onclick="deleteEntryItem('${item.id}')">✕</button>
+                        </div>
+                    </div>
+                `;
+                stack.appendChild(box);
+            });
+        }
+
+        function addEntryToActiveCalc(type = 'add') {
+            const calc = getActiveCalcObj();
+            if (!calc) return;
+
+            const day = document.getElementById('inDay').value;
+            const date = document.getElementById('inDate').value.trim() || getTodayPersian().dateStr;
+            const note = document.getElementById('inNote').value.trim();
+            const amount = parseCleanNumber(document.getElementById('inAmount').value);
+
+            if (!amount || amount <= 0) return alert('مبلغ را وارد کنید.');
+
+            calc.entries.unshift({
+                id: 'ent_' + Date.now(),
+                type,
+                day,
+                date,
+                note,
+                amount,
+                originalAmount: amount,
+                subtractedTotal: 0
+            });
+
+            document.getElementById('inAmount').value = '';
+            document.getElementById('inNote').value = '';
+            saveDatabase();
+            renderActiveCalculation();
+        }
+
+        function addGlobalDeduction() {
+            const calc = getActiveCalcObj();
+            if (!calc) return;
+
+            const note = document.getElementById('deductGlobalNote').value.trim() || 'کسر از جمع کل';
+            const amount = parseCleanNumber(document.getElementById('deductGlobalAmount').value);
+            if (!amount || amount <= 0) return alert('مبلغ کسر را وارد کنید.');
+
+            const { dateStr, weekday } = getTodayPersian();
+            calc.entries.unshift({
+                id: 'ent_' + Date.now(),
+                type: 'deduct',
+                day: weekday,
+                date: dateStr,
+                note,
+                amount
+            });
+
+            document.getElementById('deductGlobalNote').value = '';
+            document.getElementById('deductGlobalAmount').value = '';
+            saveDatabase();
+            renderActiveCalculation();
+        }
+
+        function openSubtractItemModal(entryId) {
+            const calc = getActiveCalcObj();
+            if (!calc) return;
+            const item = calc.entries.find(e => e.id === entryId);
+            if (!item) return;
+
+            subtractingEntryId = entryId;
+            document.getElementById('subtractItemInfo').textContent = `مبلغ فعلی: ${Number(item.amount).toLocaleString('fa-IR')} تومان`;
+            document.getElementById('subtractItemAmount').value = '';
+            document.getElementById('subtractItemModal').classList.add('active');
+        }
+
+        function closeSubtractItemModal() {
+            subtractingEntryId = null;
+            document.getElementById('subtractItemModal').classList.remove('active');
+        }
+
+        function confirmSubtractFromItem() {
+            const calc = getActiveCalcObj();
+            if (!calc || !subtractingEntryId) return;
+            const item = calc.entries.find(e => e.id === subtractingEntryId);
+            if (!item) return;
+
+            const subVal = parseCleanNumber(document.getElementById('subtractItemAmount').value);
+            if (!subVal || subVal <= 0) return alert('مبلغ معتبر وارد کنید.');
+
+            if (!item.originalAmount) item.originalAmount = item.amount;
+            item.subtractedTotal = (Number(item.subtractedTotal) || 0) + subVal;
+            item.amount = Math.max(0, Number(item.amount) - subVal);
+
+            saveDatabase();
+            closeSubtractItemModal();
+            renderActiveCalculation();
+        }
+
+        function deleteEntryItem(entryId) {
+            const calc = getActiveCalcObj();
+            if (!calc) return;
+            if (confirm('این ردیف حذف شود؟')) {
+                calc.entries = calc.entries.filter(e => e.id !== entryId);
+                saveDatabase();
+                renderActiveCalculation();
+            }
+        }
+
+        function openEditEntryModal(entryId) {
+            const calc = getActiveCalcObj();
+            if (!calc) return;
+            const entry = calc.entries.find(e => e.id === entryId);
+            if (!entry) return;
+
+            editingEntryId = entryId;
+            document.getElementById('editEntryDay').value = entry.day;
+            document.getElementById('editEntryDate').value = entry.date;
+            document.getElementById('editEntryNote').value = entry.note || '';
+            document.getElementById('editEntryAmount').value = Number(entry.amount).toLocaleString('en-US');
+            document.getElementById('editEntryModal').classList.add('active');
+        }
+
+        function closeEditEntryModal() {
+            editingEntryId = null;
+            document.getElementById('editEntryModal').classList.remove('active');
+        }
+
+        function saveEditedEntry() {
+            const calc = getActiveCalcObj();
+            if (!calc || !editingEntryId) return;
+            const entry = calc.entries.find(e => e.id === editingEntryId);
+            if (!entry) return;
+
+            const amount = parseCleanNumber(document.getElementById('editEntryAmount').value);
+            if (!amount) return alert('مبلغ معتبر وارد کنید.');
+
+            entry.day = document.getElementById('editEntryDay').value;
+            entry.date = document.getElementById('editEntryDate').value.trim();
+            entry.note = document.getElementById('editEntryNote').value.trim();
+            entry.amount = amount;
+            entry.originalAmount = amount;
+            entry.subtractedTotal = 0;
+
+            saveDatabase();
+            closeEditEntryModal();
+            renderActiveCalculation();
+        }
+
+        function deleteSingleCalculation(calcId) {
+            if (confirm('این محاسبه حذف شود؟')) {
+                state.calculations = state.calculations.filter(c => c.id !== calcId);
+                saveDatabase();
+                renderSavedList();
+            }
+        }
+
+        function deleteActiveCalculation() {
+            if (confirm('کل این محاسبه حذف شود؟')) {
+                state.calculations = state.calculations.filter(c => c.id !== state.activeCalcId);
+                state.activeCalcId = null;
+                saveDatabase();
+                showHomeView();
+            }
+        }
+
+        function deleteAllCalculations() {
+            if (!state.calculations.length) return;
+            if (confirm('تمام محاسبه‌ها پاک شوند؟')) {
+                state.calculations = [];
+                saveDatabase();
+                renderSavedList();
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            setupCrossPlatformPWA();
+            loadDatabase();
+            fillDefaultDateInputs();
+        });
+    </script>
+</body>
+</html>
